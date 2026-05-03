@@ -1,5 +1,5 @@
 const storeAddress =
-  "Domus Supermercado, Rua Monsenhor Agostinho, 1463 - Parque São José, Fortaleza - CE, 60730-275";
+  "Domus Supermercado, Rua Monsenhor Agostinho, 1463 - Parque São José, Fortaleza - Ceará, 60730-275";
 
 const products = [
   {
