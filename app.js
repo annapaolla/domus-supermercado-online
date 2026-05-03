@@ -283,7 +283,7 @@ document.addEventListener("click", (event) => {
   if (filterButton) setFilter(filterButton.dataset.filter);
   if (navButton) navigateTo(navButton.dataset.nav);
 
-  if (event.target.closest("[data-open-account]") || event.target.closest("[data-open-menu]")) {
+  if (event.target.closest("[data-open-account]")) {
     drawer.classList.add("open");
     drawer.setAttribute("aria-hidden", "false");
   }
