@@ -1,0 +1,63 @@
+{
+  "name": "Domus Supermercado Online",
+  "short_name": "Domus",
+  "description": "Supermercado virtual Domus com entrega em Fortaleza, retirada na loja e padaria propria.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "browser"],
+  "background_color": "#f9f9f9",
+  "theme_color": "#ffd700",
+  "orientation": "portrait-primary",
+  "lang": "pt-BR",
+  "categories": ["shopping", "food"],
+  "icons": [
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Comprar mercado",
+      "short_name": "Mercado",
+      "description": "Abrir produtos do supermercado",
+      "url": "./index.html#market",
+      "icons": [
+        {
+          "src": "icons/icon.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "Padaria Domus",
+      "short_name": "Padaria",
+      "description": "Abrir produtos da padaria",
+      "url": "./index.html#bakery",
+      "icons": [
+        {
+          "src": "icons/icon.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "Carrinho",
+      "short_name": "Carrinho",
+      "description": "Abrir carrinho de compras",
+      "url": "./index.html#cart",
+      "icons": [
+        {
+          "src": "icons/icon.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
+    }
+  ]
+}

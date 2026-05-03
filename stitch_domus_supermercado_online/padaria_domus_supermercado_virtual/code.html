@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Work+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-container": "#d83900",
+                        "on-primary": "#ffffff",
+                        "on-surface": "#1a1c1c",
+                        "on-background": "#1a1c1c",
+                        "outline-variant": "#d0c6ab",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "tertiary-fixed-dim": "#88d982",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-container": "#705e00",
+                        "on-secondary-container": "#fffbff",
+                        "inverse-primary": "#e9c400",
+                        "tertiary-container": "#9aed94",
+                        "surface-tint": "#705d00",
+                        "on-surface-variant": "#4d4732",
+                        "on-primary-fixed": "#221b00",
+                        "on-tertiary-fixed-variant": "#005312",
+                        "on-primary-fixed-variant": "#544600",
+                        "on-secondary-fixed": "#3b0900",
+                        "tertiary-fixed": "#a3f69c",
+                        "inverse-on-surface": "#f1f1f1",
+                        "surface-container-low": "#f3f3f3",
+                        "on-secondary-fixed-variant": "#872000",
+                        "surface-dim": "#dadada",
+                        "on-tertiary-fixed": "#002204",
+                        "primary-fixed": "#ffe16d",
+                        "tertiary": "#1b6d24",
+                        "primary-fixed-dim": "#e9c400",
+                        "background": "#f9f9f9",
+                        "error-container": "#ffdad6",
+                        "primary": "#705d00",
+                        "surface": "#f9f9f9",
+                        "secondary": "#ad2c00",
+                        "surface-variant": "#e2e2e2",
+                        "surface-container-high": "#e8e8e8",
+                        "primary-container": "#ffd700",
+                        "inverse-surface": "#2f3131",
+                        "surface-container-highest": "#e2e2e2",
+                        "secondary-fixed": "#ffdbd1",
+                        "surface-bright": "#f9f9f9",
+                        "outline": "#7e775f",
+                        "surface-container": "#eeeeee"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-md": "12px",
+                        "margin-mobile": "16px",
+                        "gutter": "24px",
+                        "stack-sm": "4px",
+                        "stack-lg": "32px",
+                        "container-max": "1280px",
+                        "base": "8px"
+                    },
+                    "fontFamily": {
+                        "headline-xl": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "price-display": ["Plus Jakarta Sans"],
+                        "body-md": ["Work Sans"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "body-lg": ["Work Sans"],
+                        "label-bold": ["Work Sans"]
+                    },
+                    "fontSize": {
+                        "headline-xl": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "price-display": ["22px", {"lineHeight": "24px", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "label-bold": ["14px", {"lineHeight": "20px", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Work Sans', sans-serif; background-color: #f9f9f9; }
+        .hero-gradient {
+            background: linear-gradient(0deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 60%);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background pb-20">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-white dark:bg-slate-900 shadow-sm border-b border-slate-100 dark:border-slate-800">
+<div class="flex items-center justify-between px-4 py-2 w-full">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-orange-600 dark:text-orange-500" data-icon="location_on">location_on</span>
+<div class="flex flex-col">
+<span class="text-xs text-slate-500 font-['Plus_Jakarta_Sans']">Entregar em</span>
+<h1 class="font-['Plus_Jakarta_Sans'] text-sm font-medium text-slate-800 dark:text-slate-100">Rua Monsenhor Agostinho, 1463</h1>
+</div>
+</div>
+<div class="h-8 w-8 rounded-full bg-slate-200 overflow-hidden">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="A professional headshot of a friendly user for an application profile, featuring soft studio lighting and a clean, minimalist background. The aesthetic is high-end and modern, aligned with a premium digital service interface, using a bright and accessible light-mode color palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuACA3b346qIfVCgP8EtN494zl1v91XT_rW_sFiE0I9U-1OdviO5fx5nbmREDoUktgAw4oVvMfb3NDH5M5qv5Vte7tZ5Nk1k0h8iem1tan8e4v44tATsQT4RYePEtCYqZ2FRPWdVNtpaTnDY9gSTx3dh8eGeiZq3rkELV-lxQXgUCQ3stbqu6uNAHQWGF-ZmwJTO_Fj-xJgKPGRTs-LdaP6P40jsz5r8vZzstXgcQmGOZ0iR5djSJAZ0AysbxWfNz7EtdA5hML7Zt5g"/>
+</div>
+</div>
+<div class="px-4 pb-3">
+<div class="flex items-center gap-2">
+<span class="text-xl font-black text-orange-600 dark:text-orange-500 font-headline-md">Padaria Domus</span>
+</div>
+</div>
+</header>
+<main class="mt-[100px] px-4 space-y-stack-lg">
+<!-- Hero Banner -->
+<section class="relative w-full h-[220px] rounded-xl overflow-hidden shadow-lg">
+<img alt="Pães Artesanais" class="absolute inset-0 w-full h-full object-cover" data-alt="Close-up shot of freshly baked artisanal sourdough bread with a crispy golden crust, resting on a rustic wooden table in a warm, sunlit bakery. The lighting is soft and natural, emphasizing the texture of the flour-dusted crust and the artisanal quality. The overall mood is warm, welcoming, and artisanal, reflecting the brand's premium grocery identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDICDTJTCLHnaL7ctyKbuKTkJA5IlBohCceCJtinlMhc2iTEZi-oyP2zl1fz8x7YYuYruRgfDk8lTIUxmJiLVZPbBr5L6ik8fUwG-w7ISU3mL5Il3lm9VLdKZh7g52Ev3Mzz2bUbmp4YVQTkycogJE3e9RkvMe4ws692Ex0-R_djglaa1m6cROAY8UmHYmohX_oy3H-eI9a3YhihbiFn1h6lkNWtj83UKPh1i-XS8xVwG396o02kusYMkuWWBeEB6-DodER_mQ3Qbo"/>
+<div class="hero-gradient absolute inset-0 flex flex-col justify-end p-6">
+<h2 class="text-white font-headline-md text-headline-md leading-tight mb-2">Pães Artesanais e Bolos Caseiros</h2>
+<button class="w-fit bg-primary-container text-on-primary-container px-6 py-2 rounded-full font-label-bold text-label-bold active:scale-95 transition-transform">
+                    Assados na hora
+                </button>
+</div>
+</section>
+<!-- Freshness Badge -->
+<div class="flex items-center justify-center gap-3 bg-tertiary-container/30 border border-tertiary/20 p-4 rounded-xl">
+<span class="material-symbols-outlined text-tertiary" data-icon="timer">timer</span>
+<p class="font-label-bold text-tertiary text-sm">Forno saindo a cada 30 min</p>
+</div>
+<!-- Sub-categories Chips -->
+<nav class="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4 scrollbar-hide">
+<button class="flex-shrink-0 bg-primary-container text-on-primary-container px-5 py-2 rounded-full font-label-bold shadow-sm border border-primary/10">Pães</button>
+<button class="flex-shrink-0 bg-white border border-outline-variant text-on-surface-variant px-5 py-2 rounded-full font-label-bold hover:bg-surface-container-low transition-colors">Bolos</button>
+<button class="flex-shrink-0 bg-white border border-outline-variant text-on-surface-variant px-5 py-2 rounded-full font-label-bold hover:bg-surface-container-low transition-colors">Doces</button>
+<button class="flex-shrink-0 bg-white border border-outline-variant text-on-surface-variant px-5 py-2 rounded-full font-label-bold hover:bg-surface-container-low transition-colors">Salgados</button>
+</nav>
+<!-- Product Grid -->
+<section class="grid grid-cols-2 gap-4">
+<!-- Item 1 -->
+<article class="bg-white rounded-xl overflow-hidden shadow-sm border border-slate-50 flex flex-col">
+<div class="relative h-32 w-full">
+<img alt="Pão Francês" class="w-full h-full object-cover" data-alt="A basket full of traditional Brazilian French bread rolls, 'Pão Francês', with a golden-brown crispy crust and soft white interior. The rolls are arranged neatly in a light-colored wicker basket, illuminated by warm, morning sunlight in a high-end kitchen setting. The image is clean and bright, conveying freshness and artisanal quality." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZ1Zw8JJGH3hyj8a_x1NLQu_F-OEtmB8o635EbQpBennlaL0fD6qZ2HjT1y8vkV0mRmhcfbrHFQjWUqscjWec69Mscs6nQ_hkXRVh98ZH5dF2HvxRopdhTjyfIttUlB-2OrxsmzHmyCTcfawFaNFIyLpCcJPnpSudn8g828TyT0qwq8ds0My--yEIxegukhGXASbE2-yAOeYoItMwfpqeYOTop-i8XT5ChIdkj6eBkfUJI4goLN43mjZRMZ_PUcal7qTjuTcFY8iA"/>
+<div class="absolute top-2 right-2 bg-tertiary text-white text-[10px] px-2 py-1 rounded-full font-bold uppercase tracking-wider">Fresco</div>
+</div>
+<div class="p-3 flex-grow flex flex-col justify-between space-y-2">
+<div>
+<h3 class="font-label-bold text-on-surface leading-tight">Pão Francês</h3>
+<p class="text-[12px] text-slate-500 font-body-md">Cesta com 10 unidades</p>
+</div>
+<div class="flex flex-col gap-2">
+<span class="text-secondary font-price-display text-price-display">R$ 6,50</span>
+<button class="w-full bg-secondary py-2 rounded-lg text-white font-label-bold text-sm flex items-center justify-center gap-2 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+                            Adicionar
+                        </button>
+</div>
+</div>
+</article>
+<!-- Item 2 -->
+<article class="bg-white rounded-xl overflow-hidden shadow-sm border border-slate-50 flex flex-col">
+<div class="relative h-32 w-full">
+<img alt="Bolo de Milho" class="w-full h-full object-cover" data-alt="A generous, thick slice of homemade Brazilian corn cake, 'Bolo de Milho Caseiro', showing a moist and fluffy texture. The cake is placed on a artisanal ceramic plate with crumbs around it, set against a soft-focus background of a cozy kitchen. The lighting is warm and golden, highlighting the vibrant yellow color of the corn cake." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC7VNFgTSy1IrUd3EZ8EzEhBkC5IHDacpuXhuWm1g6425Sl6Wki2p9P04GlzFL6PD__T2J8I695iHN-Met7vifzHZ-my7B6yltzNAA8pk-XySAWcDS66G6hmV0k2HPH4vEOOb8ofegvzS3muJv5kgaPupdkawmw73pD2qUem0_0CBphqY9jDHcme-oeZFNb4AFO6I1LctxmAftU0TDIwaTfHZZ_CLyPZhzTe0QMWMIDni109O_sRQOsRDHHhZDLDXEDPCFkXBeCBDc"/>
+</div>
+<div class="p-3 flex-grow flex flex-col justify-between space-y-2">
+<div>
+<h3 class="font-label-bold text-on-surface leading-tight">Bolo de Milho Caseiro</h3>
+<p class="text-[12px] text-slate-500 font-body-md">Fatia generosa</p>
+</div>
+<div class="flex flex-col gap-2">
+<span class="text-secondary font-price-display text-price-display">R$ 4,90</span>
+<button class="w-full bg-secondary py-2 rounded-lg text-white font-label-bold text-sm flex items-center justify-center gap-2 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+                            Adicionar
+                        </button>
+</div>
+</div>
+</article>
+<!-- Item 3 -->
+<article class="bg-white rounded-xl overflow-hidden shadow-sm border border-slate-50 flex flex-col">
+<div class="relative h-32 w-full">
+<img alt="Sonho de Creme" class="w-full h-full object-cover" data-alt="A traditional cream-filled doughnut, 'Sonho de Creme', dusted with fine powdered sugar. The doughnut is perfectly round and golden, with a visible swirl of rich yellow vanilla cream peeking out. The photo is taken in a professional studio setting with soft side-lighting to emphasize the fluffy texture and sugar coating." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2SwxDVL-nWp4PZwIapQILuZuSp00mSBYgInar-bX4ayijLk0EyyRYRu_-f14_WO4zO9cnC7T6p1SJ3bloUrO23dOJt2FKLpOliWKZF57v-syO_OL_J2oE1s-FxRVcD6aJegSFS9hNl01JkMRN9Rs1k5w0JxbVD1Q0AjZdslFQabiR_AkcnnZfY2N91rgxe-jSbOkGd3KoVvgtBP0NZgVIBVAd4G0LVuRLg7veP-lP4o_5PYN6I3OCAb2tLzMlbRtktnOwpCx0FV4"/>
+</div>
+<div class="p-3 flex-grow flex flex-col justify-between space-y-2">
+<div>
+<h3 class="font-label-bold text-on-surface leading-tight">Sonho de Creme</h3>
+<p class="text-[12px] text-slate-500 font-body-md">Unidade</p>
+</div>
+<div class="flex flex-col gap-2">
+<span class="text-secondary font-price-display text-price-display">R$ 3,50</span>
+<button class="w-full bg-secondary py-2 rounded-lg text-white font-label-bold text-sm flex items-center justify-center gap-2 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+                            Adicionar
+                        </button>
+</div>
+</div>
+</article>
+<!-- Item 4 -->
+<article class="bg-white rounded-xl overflow-hidden shadow-sm border border-slate-50 flex flex-col">
+<div class="relative h-32 w-full">
+<img alt="Pão de Queijo" class="w-full h-full object-cover" data-alt="A portion of small, golden Brazilian cheese breads, 'Pão de Queijo', served in a brown paper bag to signify freshness and takeaway service. The cheese breads are warm, with slightly browned spots and a soft, elastic appearance. The background is a clean, modern bakery counter with neutral tones and bright lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHcY2CP3nY-6UGK9BoxDAwkCaSz3HqwuKqsERVvgj_ODGbgOS3aHy0I5u2tAUhw7BEAqrG3WMTnm4WMF32U88ApynJAsP52jMfI9geU3a6xh0bbhwU-BlzGPtMOYLd4I1nq7zRWYnUmXyWhgY6ClBnFlkjULKELvbjKCbJOVjI7dgD93ZUgVA3D_YAGiSV7A6lcGAaZlVFBHqE3FUjANSAT_ZKLQefkfqGV24N2XQJjuOFJzLOxSrqAdSoNCEj9PLNaCmpEPeTIXs"/>
+<div class="absolute bottom-2 left-2 bg-white/90 backdrop-blur-sm px-2 py-0.5 rounded text-[10px] font-bold text-orange-600">Mais Vendido</div>
+</div>
+<div class="p-3 flex-grow flex flex-col justify-between space-y-2">
+<div>
+<h3 class="font-label-bold text-on-surface leading-tight">Pão de Queijo Mineiro</h3>
+<p class="text-[12px] text-slate-500 font-body-md">Porção 200g</p>
+</div>
+<div class="flex flex-col gap-2">
+<span class="text-secondary font-price-display text-price-display">R$ 8,90</span>
+<button class="w-full bg-secondary py-2 rounded-lg text-white font-label-bold text-sm flex items-center justify-center gap-2 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+                            Adicionar
+                        </button>
+</div>
+</div>
+</article>
+</section>
+<!-- Artisanal Section Detail -->
+<section class="bg-primary/5 rounded-2xl p-6 border border-primary-container/20 flex items-center gap-6">
+<div class="flex-1 space-y-2">
+<h4 class="font-headline-md text-primary">Nossa Produção</h4>
+<p class="text-sm text-on-surface-variant font-body-md">Utilizamos fermentação natural e ingredientes selecionados para garantir o sabor real de padaria artesanal.</p>
+</div>
+<div class="w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-md">
+<img alt="Nossa Produção" class="w-full h-full object-cover" data-alt="A professional baker in a clean white apron kneading dough by hand in an artisanal bakery. Flour is visible in the air and on the wooden surface, creating a dynamic and authentic atmosphere. The scene is illuminated by warm, high-quality lighting, highlighting the craftsmanship and dedication behind the products." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAzh2A5sV5jLGqk8nZPXQ_FmEEDYnx_4Sl7iH8GS6Sg2A8RSyrzF3n3Fq3fDKdEJItjIOPa5brexnWhnqL4510hlmB8rEM9-Dc5GssM8CTXDxey-jOSGlwjk8staOI1qgxbG5RkqRHNJ6YDIO9n4d0216ytwL2HNwb6cHL-_Bmx1cjQFmUGBNhJiJq9JHX9gPxVkeRUl7Twk1yfs8WYJAxFBglJun1rN9vb6_axQUSy67t9XssIXnDmsVVp6_pYV9NPQUrRMJ-gXEc"/>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full h-16 flex justify-around items-center bg-white dark:bg-slate-900 px-2 pb-safe z-50 rounded-t-2xl shadow-[0_-4px_10px_rgba(0,0,0,0.05)] border-t border-slate-100 dark:border-slate-800">
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-3 py-1 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[11px] font-semibold">Início</span>
+</a>
+<a class="flex flex-col items-center justify-center text-orange-600 dark:text-orange-500 bg-yellow-50 dark:bg-yellow-900/20 rounded-xl px-3 py-1 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="grid_view" style="font-variation-settings: 'FILL' 1;">grid_view</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[11px] font-semibold">Categorias</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-3 py-1 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[11px] font-semibold">Carrinho</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-3 py-1 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[11px] font-semibold">Perfil</span>
+</a>
+</nav>
+</body></html>

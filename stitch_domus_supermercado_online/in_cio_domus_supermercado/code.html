@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Work+Sans:wght@400;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "on-tertiary-fixed": "#002204",
+                "secondary-fixed-dim": "#ffb5a0",
+                "primary": "#705d00",
+                "on-background": "#1a1c1c",
+                "on-tertiary-fixed-variant": "#005312",
+                "secondary-container": "#d83900",
+                "inverse-on-surface": "#f1f1f1",
+                "on-secondary": "#ffffff",
+                "on-secondary-container": "#fffbff",
+                "surface-dim": "#dadada",
+                "surface-container-lowest": "#ffffff",
+                "outline": "#7e775f",
+                "surface-container-high": "#e8e8e8",
+                "on-primary-fixed": "#221b00",
+                "tertiary-container": "#9aed94",
+                "surface": "#f9f9f9",
+                "tertiary-fixed-dim": "#88d982",
+                "on-secondary-fixed": "#3b0900",
+                "primary-fixed-dim": "#e9c400",
+                "surface-container-low": "#f3f3f3",
+                "outline-variant": "#d0c6ab",
+                "on-secondary-fixed-variant": "#872000",
+                "on-primary-container": "#705e00",
+                "inverse-primary": "#e9c400",
+                "surface-tint": "#705d00",
+                "secondary": "#ad2c00",
+                "primary-fixed": "#ffe16d",
+                "on-primary-fixed-variant": "#544600",
+                "on-primary": "#ffffff",
+                "background": "#f9f9f9",
+                "on-surface": "#1a1c1c",
+                "on-tertiary-container": "#1c6d24",
+                "primary-container": "#ffd700",
+                "on-error-container": "#93000a",
+                "surface-variant": "#e2e2e2",
+                "surface-container": "#eeeeee",
+                "tertiary": "#1b6d24",
+                "surface-bright": "#f9f9f9",
+                "on-surface-variant": "#4d4732",
+                "tertiary-fixed": "#a3f69c",
+                "surface-container-highest": "#e2e2e2",
+                "error": "#ba1a1a",
+                "secondary-fixed": "#ffdbd1",
+                "inverse-surface": "#2f3131",
+                "on-error": "#ffffff",
+                "error-container": "#ffdad6",
+                "on-tertiary": "#ffffff"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+            },
+            "spacing": {
+                "base": "8px",
+                "stack-md": "12px",
+                "stack-sm": "4px",
+                "gutter": "24px",
+                "margin-mobile": "16px",
+                "stack-lg": "32px",
+                "container-max": "1280px"
+            },
+            "fontFamily": {
+                "headline-xl": ["Plus Jakarta Sans"],
+                "label-bold": ["Work Sans"],
+                "body-lg": ["Work Sans"],
+                "headline-md": ["Plus Jakarta Sans"],
+                "price-display": ["Plus Jakarta Sans"],
+                "body-md": ["Work Sans"],
+                "headline-lg": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                "headline-xl": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                "label-bold": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                "price-display": ["22px", {"lineHeight": "24px", "fontWeight": "700"}],
+                "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md min-h-screen pb-24">
+<!-- TopAppBar -->
+<header class="bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 shadow-sm sticky top-0 z-50 flex items-center justify-between px-4 py-3 w-full">
+<div class="flex items-center gap-3">
+<img alt="Domus Logo" class="h-10 w-auto" data-alt="A professional and clean corporate logo for Domus Supermercado, featuring bold typography in vibrant orange and warm yellow tones. The design is modern and minimalist, set against a crisp white background to emphasize a high-end retail brand identity. The lighting is bright and even, conveying a sense of reliability, freshness, and community-focused supermarket service." src="https://lh3.googleusercontent.com/aida-public/AB6AXuChKi1gusz-zGVHEPmMZD0jgIgAOzHEvCBjx0AJ9MuHB8Ll1kYll34YUG3BkhXd1Ek1DLbPRTwEPo0AqbRPqe526fNVuNyBfhrdMsDL2ZLVAySLi6FxmDn-vv5zfay6_bRV9M9p9uH-fQmqnIexS7iVYUPue4A_oAMFrCIMc5pPkdne9O-B1OWetA4xmKQGTYrkzXs4tYv17y97OLawg1Y7Huwq92glm3hxXPPMq_W6R9QLzgIaTiMRhJJor8_eXK3F9RjXTCX1Yo0"/>
+<div class="flex flex-col">
+<span class="text-orange-600 dark:text-orange-500 font-['Plus_Jakarta_Sans'] text-xs font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">location_on</span>
+                    ENTREGAR EM
+                </span>
+<h1 class="font-['Plus_Jakarta_Sans'] text-sm font-medium text-on-background truncate max-w-[200px]">Rua Monsenhor Agostinho, 1463</h1>
+</div>
+</div>
+<div class="h-10 w-10 rounded-full bg-slate-100 flex items-center justify-center overflow-hidden border-2 border-primary-container">
+<span class="material-symbols-outlined text-slate-500">person</span>
+</div>
+</header>
+<main class="max-w-container-max mx-auto px-4 pt-4 space-y-gutter">
+<!-- Search Bar Section -->
+<section class="relative">
+<div class="flex items-center bg-white shadow-[0_4px_20px_rgba(0,0,0,0.06)] rounded-full px-5 py-4 w-full border border-slate-50">
+<span class="material-symbols-outlined text-slate-400 mr-3">search</span>
+<input class="bg-transparent border-none focus:ring-0 w-full text-body-md placeholder:text-slate-400" placeholder="O que você procura hoje?" type="text"/>
+<span class="material-symbols-outlined text-secondary ml-2">tune</span>
+</div>
+</section>
+<!-- Hero Banner -->
+<section class="relative overflow-hidden rounded-3xl bg-primary-container h-40 flex items-center px-8">
+<div class="relative z-10 space-y-2">
+<span class="bg-secondary text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">Aviso Importante</span>
+<h2 class="font-headline-md text-on-primary-fixed-variant leading-tight">Entregas apenas em Fortaleza</h2>
+<p class="text-on-primary-fixed-variant/80 font-body-md">Sua feira fresquinha em poucos minutos.</p>
+</div>
+<div class="absolute right-0 top-0 h-full w-1/2 opacity-20 pointer-events-none" style="background: radial-gradient(circle at center, #ad2c00 0%, transparent 70%);"></div>
+<span class="material-symbols-outlined absolute right-8 text-8xl text-secondary/10 rotate-12">local_shipping</span>
+</section>
+<!-- Two Large Action Cards -->
+<section class="grid grid-cols-2 gap-4">
+<div class="group relative overflow-hidden rounded-3xl h-52 bg-white shadow-sm border border-slate-100 flex flex-col justify-end p-5 transition-transform active:scale-95">
+<div class="absolute inset-0">
+<img alt="Supermercado" class="w-full h-full object-cover" data-alt="A lush and vibrant close-up of fresh organic vegetables including crisp bell peppers, dewy greens, and bright tomatoes arranged in a high-end supermarket display. The lighting is soft and cinematic, highlighting the natural textures and vivid colors of the produce. The overall aesthetic is fresh, premium, and clean, perfectly representing a modern grocery shopping experience." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAb24vJPLm2hX2XQqHYZf_gcXxuXwe8MxuVKvMgF3gImbuX6Aave_TyCM3fwYOp8GOD4IMxIFUAzvXTo95HSKrqsuVzI7RrCMV2TvJedtRRIXlZNtlQW8CtuRMzt0TDF5jYCSRiuTZscuUUmS7ge75aJFXQmP2-rHWjzHcfOGI73sMy_XyfE0SEEEORB61iMiUDIeufLBAXWLiqMoa70BaQTX-TPIi1XZ4XffYdAbtdxzD367qZAzRrK7-PinXmZ-5TdrTo1kNuNeU"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+</div>
+<div class="relative z-10">
+<h3 class="font-headline-md text-white">Supermercado</h3>
+<div class="flex items-center text-primary-container text-xs font-bold gap-1 mt-1">
+                        VER TUDO <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</div>
+</div>
+</div>
+<div class="group relative overflow-hidden rounded-3xl h-52 bg-white shadow-sm border border-slate-100 flex flex-col justify-end p-5 transition-transform active:scale-95">
+<div class="absolute inset-0">
+<img alt="Padaria Domus" class="w-full h-full object-cover" data-alt="Warm, golden-brown artisanal breads and crusty croissants fresh from the oven, displayed on a rustic wooden surface in a cozy bakery setting. Dustings of flour and soft morning sunlight create a welcoming, homey atmosphere. The image focuses on the rich textures and premium quality of the baked goods, emphasizing the 'The Helpful Neighbor' brand personality." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPDdPm0k_mOdSuyh69cbY2Bu0G2flNBBXybHD6pOynCmgBs8RKq98oyT1fwWWj_ixWr1roQUwx2wR6MuVbEOZODAVi409ElTjvNrSsVgYdKi1BgGjr_6yiDoYOdVFaESqfQymoggSerJf028YcKulRpPWGyKTAAgPgKUd0o8p0HCg0Y3MjSQwGdPH2jbAyd3DHO0ZyJTNrJz0G6o6V2avxqQOi1IEQ4mzIBZtBXl9IrBhY1MiiNl5OYpKBsDCOVZ-LTKS9pAB7odQ"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+</div>
+<div class="relative z-10">
+<h3 class="font-headline-md text-white">Padaria Domus</h3>
+<div class="flex items-center text-primary-container text-xs font-bold gap-1 mt-1">
+                        FRESH <span class="material-symbols-outlined text-sm">bakery_dining</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Featured Offers Horizontal Scroll -->
+<section class="space-y-4">
+<div class="flex items-center justify-between">
+<h2 class="font-headline-md text-on-background">Ofertas em Destaque</h2>
+<button class="text-secondary font-label-bold flex items-center gap-1">Ver mais <span class="material-symbols-outlined text-sm">chevron_right</span></button>
+</div>
+<div class="flex gap-4 overflow-x-auto pb-4 hide-scrollbar snap-x">
+<!-- Product Card 1 -->
+<div class="min-w-[160px] snap-start bg-white rounded-2xl p-3 shadow-sm border border-slate-50 flex flex-col relative">
+<div class="absolute top-2 left-2 z-10">
+<span class="bg-tertiary text-white text-[9px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1 uppercase">
+                            Entrega Rápida
+                        </span>
+</div>
+<div class="aspect-square bg-slate-50 rounded-xl mb-3 overflow-hidden">
+<img alt="Alface Americana" class="w-full h-full object-cover" data-alt="A single head of fresh, crisp iceberg lettuce with water droplets, photographed against a clean white studio background. High-key lighting emphasizes its bright green color and organic texture, creating a premium food-first presentation that signals freshness and quality in a modern grocery context." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDH4H3JlTjhhZXdMkzEKqADHAvNFQRBHPgbo75OK-MlBvpvkl5zYPx2fIbckxacG-1VFTtKaGWY9155UNBeKlT2GNfwaLDlb2v2kTs0BgNaut7JlitbxwzyiZDlAWUobX_OOaXDiDv6UCwKatYCWYuHY7w6hFbcB6riTUYVyhWUd3f93wfM9m7jd6GntPaRT6TLKAlV4hr2vhJVFR7n1ZP9YwjiPBlFrmIYV5rN1B3KirtJ59xD9VZthf_1bNKKX0sVHoJ5fNi4WuI"/>
+</div>
+<div class="flex flex-col flex-grow">
+<span class="text-xs text-slate-500 font-medium">Hortifruti</span>
+<h4 class="font-label-bold text-on-background line-clamp-2">Alface Americana Higienizada</h4>
+<div class="mt-auto pt-3 flex items-end justify-between">
+<div class="flex flex-col">
+<span class="text-[10px] text-slate-400 line-through">R$ 5,90</span>
+<span class="text-price-display text-secondary">R$ 3,99</span>
+</div>
+<button class="bg-secondary text-white w-8 h-8 rounded-full flex items-center justify-center shadow-md active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-xl">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="min-w-[160px] snap-start bg-white rounded-2xl p-3 shadow-sm border border-slate-50 flex flex-col relative">
+<div class="aspect-square bg-slate-50 rounded-xl mb-3 overflow-hidden">
+<img alt="Leite Integral" class="w-full h-full object-cover" data-alt="A premium carton of whole milk shown on a clean, modern kitchen counter. Soft natural light highlights the minimalist packaging design. The setting is bright and airy, using a neutral palette that makes the product stand out, reflecting a reliable and efficient supermarket aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuABDxTlRLIULphRP5Uffph_vrBEYErAKyw-wmWaXOW_N7j7lKT1L1Pcwt4X9-j1nVyR4mKrMR_jmrn40TyEdeY-fdGs9O3PJLzquUkkRM2MKYcSFgHUu04f3miKzLPDsqVDbQ1Wo--NAbS7TQ0z-b4w3F8DsuTN_vbyd-OSBAdY-rplFntLp3y1OB8oC0aHVejwKR4UQAdYDqxGYxSyHl6GpqspJfXlrq7PfZt9k8FE5slOUdmqKIijqvTVAxt0q3WDQmTBmX1NvAk"/>
+</div>
+<div class="flex flex-col flex-grow">
+<span class="text-xs text-slate-500 font-medium">Laticínios</span>
+<h4 class="font-label-bold text-on-background line-clamp-2">Leite Integral Betânia 1L</h4>
+<div class="mt-auto pt-3 flex items-end justify-between">
+<div class="flex flex-col">
+<span class="text-price-display text-on-background">R$ 5,49</span>
+</div>
+<button class="bg-secondary text-white w-8 h-8 rounded-full flex items-center justify-center shadow-md active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-xl">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product Card 3 -->
+<div class="min-w-[160px] snap-start bg-white rounded-2xl p-3 shadow-sm border border-slate-50 flex flex-col relative">
+<div class="absolute top-2 left-2 z-10">
+<span class="bg-orange-100 text-secondary text-[9px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1 uppercase">
+                            -25% OFF
+                        </span>
+</div>
+<div class="aspect-square bg-slate-50 rounded-xl mb-3 overflow-hidden">
+<img alt="Café Moído" class="w-full h-full object-cover" data-alt="Rich, dark roasted coffee beans and a bag of premium ground coffee. The image is captured with professional studio lighting that creates deep shadows and highlights the oily texture of the beans. The background is a clean neutral grey, emphasizing a sophisticated and trustworthy product quality." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAgnuXjJmhmyGvObtDOLwRn6sVb880mXvIeUX-eDZsLTS86Usio81fjdTe0riWXWqfvVzqYzcxacL0TnR9HzNA_wlVc1rjWzWOmARAd-AWIKQXCdyV1qeFJU_U3uyMINcnFUPPSEznBvwEFWibT9Kxpb6getbEdknlzV3Pge0b6VSjxiyBfNOEwJzt5KOz3EPYlql4RHK5QP2xo57HFT0t2b8LFKRI20CjDJHz5sN6gj3LMRLdmQKMLgopk2TVsjGNZxn4IE-FWHmc"/>
+</div>
+<div class="flex flex-col flex-grow">
+<span class="text-xs text-slate-500 font-medium">Matinal</span>
+<h4 class="font-label-bold text-on-background line-clamp-2">Café Santa Clara Vácuo 250g</h4>
+<div class="mt-auto pt-3 flex items-end justify-between">
+<div class="flex flex-col">
+<span class="text-[10px] text-slate-400 line-through">R$ 12,90</span>
+<span class="text-price-display text-secondary">R$ 9,67</span>
+</div>
+<button class="bg-secondary text-white w-8 h-8 rounded-full flex items-center justify-center shadow-md active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-xl">add</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Special Banner -->
+<section class="bg-secondary-fixed text-on-secondary-fixed-variant p-6 rounded-3xl flex items-center justify-between">
+<div class="space-y-1">
+<h3 class="font-headline-md">Clube Domus</h3>
+<p class="text-sm opacity-90">Cadastre-se e ganhe descontos exclusivos em cada compra.</p>
+<button class="mt-3 bg-white text-secondary px-5 py-2 rounded-full font-label-bold text-sm shadow-sm">PARTICIPAR</button>
+</div>
+<span class="material-symbols-outlined text-5xl opacity-30">loyalty</span>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full h-16 flex justify-around items-center bg-white dark:bg-slate-900 px-2 pb-safe border-t border-slate-100 dark:border-slate-800 shadow-[0_-4px_10px_rgba(0,0,0,0.05)] z-50 rounded-t-2xl">
+<a class="flex flex-col items-center justify-center text-orange-600 dark:text-orange-500 bg-yellow-50 dark:bg-yellow-900/20 rounded-xl px-3 py-1 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[11px] font-semibold">Início</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-3 py-1 hover:text-orange-500 dark:hover:text-orange-400 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined">grid_view</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[11px] font-semibold">Categorias</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-3 py-1 hover:text-orange-500 dark:hover:text-orange-400 active:scale-95 transition-transform relative" href="#">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[11px] font-semibold">Carrinho</span>
+<span class="absolute top-0 right-2 bg-secondary text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold">2</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-3 py-1 hover:text-orange-500 dark:hover:text-orange-400 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[11px] font-semibold">Perfil</span>
+</a>
+</nav>
+</body></html>

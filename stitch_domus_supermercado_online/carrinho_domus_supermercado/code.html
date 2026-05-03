@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Work+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #f9f9f9;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-tertiary-fixed": "#002204",
+                      "secondary-fixed-dim": "#ffb5a0",
+                      "primary": "#705d00",
+                      "on-background": "#1a1c1c",
+                      "on-tertiary-fixed-variant": "#005312",
+                      "secondary-container": "#d83900",
+                      "inverse-on-surface": "#f1f1f1",
+                      "on-secondary": "#ffffff",
+                      "on-secondary-container": "#fffbff",
+                      "surface-dim": "#dadada",
+                      "surface-container-lowest": "#ffffff",
+                      "outline": "#7e775f",
+                      "surface-container-high": "#e8e8e8",
+                      "on-primary-fixed": "#221b00",
+                      "tertiary-container": "#9aed94",
+                      "surface": "#f9f9f9",
+                      "tertiary-fixed-dim": "#88d982",
+                      "on-secondary-fixed": "#3b0900",
+                      "primary-fixed-dim": "#e9c400",
+                      "surface-container-low": "#f3f3f3",
+                      "outline-variant": "#d0c6ab",
+                      "on-secondary-fixed-variant": "#872000",
+                      "on-primary-container": "#705e00",
+                      "inverse-primary": "#e9c400",
+                      "surface-tint": "#705d00",
+                      "secondary": "#ad2c00",
+                      "primary-fixed": "#ffe16d",
+                      "on-primary-fixed-variant": "#544600",
+                      "on-primary": "#ffffff",
+                      "background": "#f9f9f9",
+                      "on-surface": "#1a1c1c",
+                      "on-tertiary-container": "#1c6d24",
+                      "primary-container": "#ffd700",
+                      "on-error-container": "#93000a",
+                      "surface-variant": "#e2e2e2",
+                      "surface-container": "#eeeeee",
+                      "tertiary": "#1b6d24",
+                      "surface-bright": "#f9f9f9",
+                      "on-surface-variant": "#4d4732",
+                      "tertiary-fixed": "#a3f69c",
+                      "surface-container-highest": "#e2e2e2",
+                      "error": "#ba1a1a",
+                      "secondary-fixed": "#ffdbd1",
+                      "inverse-surface": "#2f3131",
+                      "on-error": "#ffffff",
+                      "error-container": "#ffdad6",
+                      "on-tertiary": "#ffffff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "base": "8px",
+                      "stack-md": "12px",
+                      "stack-sm": "4px",
+                      "gutter": "24px",
+                      "margin-mobile": "16px",
+                      "stack-lg": "32px",
+                      "container-max": "1280px"
+              },
+              "fontFamily": {
+                      "headline-xl": ["Plus Jakarta Sans"],
+                      "label-bold": ["Work Sans"],
+                      "body-lg": ["Work Sans"],
+                      "headline-md": ["Plus Jakarta Sans"],
+                      "price-display": ["Plus Jakarta Sans"],
+                      "body-md": ["Work Sans"],
+                      "headline-lg": ["Plus Jakarta Sans"]
+              },
+              "fontSize": {
+                      "headline-xl": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "label-bold": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "price-display": ["22px", {"lineHeight": "24px", "fontWeight": "700"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}]
+              }
+            },
+          },
+        }
+      </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md">
+<!-- TopAppBar -->
+<header class="bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 shadow-sm fixed top-0 w-full z-50 flex items-center justify-between px-4 py-2 w-full">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-orange-600 dark:text-orange-500" data-icon="location_on">location_on</span>
+<span class="font-['Plus_Jakarta_Sans'] text-sm font-medium text-slate-700 dark:text-slate-200">Rua Monsenhor Agostinho, 1463</span>
+</div>
+<div class="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center overflow-hidden">
+<img alt="Profile" class="w-full h-full object-cover" data-alt="A professional and clean studio headshot of a friendly man with a warm smile, set against a soft, out-of-focus light grey background. The lighting is bright and high-key, aligning with a modern supermarket app's clean aesthetic. The visual style is crisp and high-resolution, conveying trust and efficiency." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxO1aEOC8ngARmmUdpi9GSl7KJJyPRING3I-QnxGse-Vq9seKnV9fMaV9RE1I-R7gjGf3ssGSBtDOXTNpU-P0Y6ZGZrEc4VSlOf7DpbtAo3pxcjKpq9A9_GSgabGaqt_5hyxH3l30nUVmuRdDhTIRu0lQQQBr11zRRCZTVHYRReqRZLS2KFy_ahip2OrhP6gJR5_u1XQypxK7dnY_RwTYGP6GaXB31FJsvfK2hIu9eZuvCtSEUeEDyAlC5JlvChzK80T8x-e0rybQ"/>
+</div>
+</header>
+<main class="pt-16 pb-32 px-4 max-w-container-max mx-auto">
+<div class="mt-stack-lg mb-stack-md">
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Meu Carrinho</h1>
+<p class="text-on-surface-variant font-body-md">Você tem 3 itens no seu carrinho</p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Cart Items List -->
+<div class="lg:col-span-8 space-y-stack-md">
+<!-- Item 1 -->
+<div class="bg-surface-container-lowest p-4 rounded-xl shadow-sm flex items-center gap-4 transition-transform active:scale-[0.98]">
+<div class="w-20 h-20 bg-slate-50 rounded-lg flex-shrink-0">
+<img alt="Morango Fresh" class="w-full h-full object-cover rounded-lg" data-alt="A close-up, high-definition photograph of fresh, vibrant red strawberries in a clean white porcelain bowl. The lighting is bright and natural, emphasizing the dewy texture and freshness of the fruit. The background is a soft, minimalist white, reflecting the high-quality, 'food-first' visual identity of a premium digital supermarket." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDfoDrKuyh2c01eyGn4zCS8oEY2FI_y4rO6toQeWaOjcE_l6IVQBJaCIQks__phjQ5iFEDC97Id9hTtwENff0VH73dYtcZiDaoymN6h1dmeXXhb7r6L7a-DKQ2DIKfoM0ote4a5jhg_f-C_kA7cyoYl-F9sKeqLSB27eg1ZbHkJxk0SOnLG0tNWg5qT4VTZPnYho1JuEjy4zQoRItRKxu_vA86LMhPQoDRSno3vLZCPnbt7iQXX2w4PV0m3kC7YGVMVjtVaXqTPfBA"/>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start">
+<h3 class="font-label-bold text-on-surface">Morango Fresh Selecionado 250g</h3>
+<button class="text-on-surface-variant"><span class="material-symbols-outlined text-[20px]" data-icon="delete">delete</span></button>
+</div>
+<p class="text-secondary font-price-display text-price-display mt-1">R$ 12,90</p>
+<div class="flex items-center justify-between mt-stack-sm">
+<span class="text-on-tertiary-container bg-tertiary-container/30 px-2 py-0.5 rounded-full text-[10px] font-bold">ENTREGA RÁPIDA</span>
+<div class="flex items-center bg-surface-container rounded-full px-3 py-1 gap-4">
+<button class="text-secondary font-bold text-lg">-</button>
+<span class="font-label-bold">1</span>
+<button class="text-secondary font-bold text-lg">+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="bg-surface-container-lowest p-4 rounded-xl shadow-sm flex items-center gap-4">
+<div class="w-20 h-20 bg-slate-50 rounded-lg flex-shrink-0">
+<img alt="Leite Integral" class="w-full h-full object-cover rounded-lg" data-alt="A modern, clean product shot of a carton of fresh milk standing on a white marble surface. The lighting is soft and diffused, creating a bright and airy atmosphere. The color palette is dominated by pure whites and subtle blues, maintaining a high-legibility and fresh aesthetic suitable for an upscale virtual grocery store." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYkCgTkOBTIyyNe3oJVc15y3D2IRN4BP3JOFT9qNFhF4PjWJGOBbdlcEQSn2797-OA1vJYfCrcGFoN5sTXn5LRuxmL0vYI0M-zmZbGqS2beiHwBgav_fRxmmZ8nQpTB9_baqlSTV3_Ft7vpOOZJKUBX0igAAlqfaaQqlbv33PXGLMFaFHmInRXM_ZcMVv338WeIHMJDSd59zBxdVOfu_CuB46A0C2m1WO7EOAql_mChYAypM9gGZzCqkDudLtLjIv1Fbpldu1tBVw"/>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start">
+<h3 class="font-label-bold text-on-surface">Leite Integral Tipo A 1L</h3>
+<button class="text-on-surface-variant"><span class="material-symbols-outlined text-[20px]" data-icon="delete">delete</span></button>
+</div>
+<p class="text-secondary font-price-display text-price-display mt-1">R$ 5,49</p>
+<div class="flex items-center justify-end mt-stack-sm">
+<div class="flex items-center bg-surface-container rounded-full px-3 py-1 gap-4">
+<button class="text-secondary font-bold text-lg">-</button>
+<span class="font-label-bold">2</span>
+<button class="text-secondary font-bold text-lg">+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="bg-surface-container-lowest p-4 rounded-xl shadow-sm flex items-center gap-4">
+<div class="w-20 h-20 bg-slate-50 rounded-lg flex-shrink-0">
+<img alt="Suco de Laranja" class="w-full h-full object-cover rounded-lg" data-alt="A refreshing glass bottle of chilled orange juice with condensation on the glass, placed against a vibrant, sunlit breakfast setting. The lighting is warm and golden, highlighting the bright citrus color. The overall visual style is energetic and healthy, using a rich palette of oranges and whites to signify quality and freshness." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4egiUtlyZeRlw1Hg7BCUG7OLIxbnywMVlutwBFOgN0LqXITDsIod1V7Or0gxSxivSNh69jB-NjKRAR-h5_Kl2__uy6q3OCW89Lmr1vSBVJFyplnFb0nQwICY9jQUVch6_gxkHiHoxFigEHP5fu455bHES--gwQHNXjaZoOVdTlANvsPzmXCGnApqwg-nnfNnhsQeLANMkrEOyZsMpZmL0DobX83qjLdk3liAtQC_UfPnShS5hGGbfPdrXJGuNKZUxg8GcfhzmoHQ"/>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start">
+<h3 class="font-label-bold text-on-surface">Suco de Laranja Integral 900ml</h3>
+<button class="text-on-surface-variant"><span class="material-symbols-outlined text-[20px]" data-icon="delete">delete</span></button>
+</div>
+<p class="text-secondary font-price-display text-price-display mt-1">R$ 15,90</p>
+<div class="flex items-center justify-end mt-stack-sm">
+<div class="flex items-center bg-surface-container rounded-full px-3 py-1 gap-4">
+<button class="text-secondary font-bold text-lg">-</button>
+<span class="font-label-bold">1</span>
+<button class="text-secondary font-bold text-lg">+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Checkout Section -->
+<div class="lg:col-span-4 space-y-gutter">
+<!-- Delivery Toggle -->
+<div class="bg-white p-4 rounded-2xl shadow-sm space-y-4">
+<h2 class="font-headline-md text-on-surface text-lg">Método de Entrega</h2>
+<div class="flex p-1 bg-surface-container rounded-xl">
+<button class="flex-1 py-2 text-sm font-label-bold rounded-lg bg-white shadow-sm text-secondary">
+                            Entregar em Casa
+                        </button>
+<button class="flex-1 py-2 text-sm font-label-bold text-on-surface-variant">
+                            Retirar na Loja
+                        </button>
+</div>
+<!-- Address Input (Fortaleza context) -->
+<div class="space-y-stack-md pt-2">
+<div class="p-4 border-2 border-primary-container rounded-xl bg-primary-container/5 relative">
+<div class="flex items-center gap-3 mb-1">
+<span class="material-symbols-outlined text-secondary" data-icon="home_pin">home_pin</span>
+<span class="font-label-bold">Endereço de Entrega</span>
+</div>
+<p class="text-sm text-on-surface leading-relaxed">Rua Monsenhor Agostinho, 1463, Meireles<br/>Fortaleza - CE, 60160-280</p>
+<button class="absolute top-4 right-4 text-secondary text-xs font-bold">ALTERAR</button>
+</div>
+<div class="relative">
+<input class="w-full bg-surface-container-low border-none rounded-xl py-3 px-4 text-sm focus:ring-2 focus:ring-secondary transition-all" placeholder="Complemento (Apto, Bloco...)" type="text"/>
+</div>
+</div>
+</div>
+<!-- Totals Summary -->
+<div class="bg-white p-6 rounded-2xl shadow-sm space-y-4">
+<h2 class="font-headline-md text-on-surface text-lg">Resumo do Pedido</h2>
+<div class="space-y-3">
+<div class="flex justify-between text-on-surface-variant">
+<span>Subtotal</span>
+<span>R$ 39,78</span>
+</div>
+<div class="flex justify-between text-on-surface-variant">
+<span>Taxa de Entrega</span>
+<span class="text-tertiary">Grátis</span>
+</div>
+<div class="flex justify-between text-on-surface-variant">
+<span>Descontos</span>
+<span class="text-secondary">- R$ 5,00</span>
+</div>
+<div class="pt-4 border-t border-slate-100 flex justify-between items-center">
+<span class="font-headline-md text-lg">Total</span>
+<span class="text-secondary font-headline-xl text-2xl">R$ 34,78</span>
+</div>
+</div>
+<button class="w-full bg-secondary-container hover:bg-secondary text-white font-headline-md py-4 rounded-xl shadow-lg transition-all active:scale-95 flex items-center justify-center gap-2">
+                        Finalizar Pedido
+                        <span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</button>
+<p class="text-[10px] text-center text-on-surface-variant uppercase tracking-wider font-bold">Pagamento seguro via Domus Pay</p>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full h-16 flex justify-around items-center bg-white dark:bg-slate-900 px-2 pb-safe border-t border-slate-100 dark:border-slate-800 shadow-[0_-4px_10px_rgba(0,0,0,0.05)] rounded-t-2xl z-50">
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-3 py-1 hover:text-orange-500 dark:hover:text-orange-400 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[11px] font-semibold">Início</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-3 py-1 hover:text-orange-500 dark:hover:text-orange-400 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="grid_view">grid_view</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[11px] font-semibold">Categorias</span>
+</a>
+<a class="flex flex-col items-center justify-center text-orange-600 dark:text-orange-500 bg-yellow-50 dark:bg-yellow-900/20 rounded-xl px-3 py-1 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="shopping_cart" style="font-variation-settings: 'FILL' 1;">shopping_cart</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[11px] font-semibold">Carrinho</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-3 py-1 hover:text-orange-500 dark:hover:text-orange-400 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[11px] font-semibold">Perfil</span>
+</a>
+</nav>
+</body></html>

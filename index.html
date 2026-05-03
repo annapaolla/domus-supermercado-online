@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#ffd700" />
+    <meta name="description" content="Supermercado virtual Domus com entrega em Fortaleza e retirada na loja." />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Domus" />
+    <title>Domus Supermercado Online</title>
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="icon" href="icons/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="icons/icon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Work+Sans:wght@400;500;600;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <button class="icon-button" type="button" data-open-menu aria-label="Abrir menu">
+          <span class="material-symbols-outlined">menu</span>
+        </button>
+
+        <button class="store-identity" type="button" data-nav="home">
+          <span class="logo-mark">Domus</span>
+          <span>
+            <strong>Domus Supermercado</strong>
+            <small>Rua Monsenhor Agostinho, 1463 - Parque São José, Fortaleza - CE</small>
+          </span>
+        </button>
+
+        <button class="profile-pill" type="button" data-open-account>
+          <span class="material-symbols-outlined">person</span>
+          <span>Entrar</span>
+        </button>
+      </header>
+
+      <main>
+        <section class="hero-band" id="home">
+          <div class="hero-copy">
+            <span class="alert-badge">Entregas apenas em Fortaleza</span>
+            <h1>Sua feira do Domus pronta para chegar em casa ou retirar na loja.</h1>
+            <p>
+              Escolha produtos do supermercado, reserve itens frescos da padaria Domus e acompanhe
+              tudo em um carrinho único.
+            </p>
+            <div class="hero-actions">
+              <button class="primary-button" type="button" data-nav="market">
+                <span class="material-symbols-outlined">shopping_basket</span>
+                Comprar mercado
+              </button>
+              <button class="secondary-button" type="button" data-nav="bakery">
+                <span class="material-symbols-outlined">bakery_dining</span>
+                Ver padaria
+              </button>
+            </div>
+          </div>
+          <div class="hero-visual" aria-hidden="true">
+            <img
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuAb24vJPLm2hX2XQqHYZf_gcXxuXwe8MxuVKvMgF3gImbuX6Aave_TyCM3fwYOp8GOD4IMxIFUAzvXTo95HSKrqsuVzI7RrCMV2TvJedtRRIXlZNtlQW8CtuRMzt0TDF5jYCSRiuTZscuUUmS7ge75aJFXQmP2-rHWjzHcfOGI73sMy_XyfE0SEEEORB61iMiUDIeufLBAXWLiqMoa70BaQTX-TPIi1XZ4XffYdAbtdxzD367qZAzRrK7-PinXmZ-5TdrTo1kNuNeU"
+              alt=""
+            />
+          </div>
+        </section>
+
+        <section class="search-row" aria-label="Busca e modo de pedido">
+          <label class="search-box">
+            <span class="material-symbols-outlined">search</span>
+            <input id="searchInput" type="search" placeholder="O que você procura hoje?" />
+          </label>
+          <div class="mode-toggle" role="group" aria-label="Modo de atendimento">
+            <button class="active" type="button" data-mode="delivery">Entrega</button>
+            <button type="button" data-mode="pickup">Retirada</button>
+          </div>
+        </section>
+
+        <section class="service-strip">
+          <article>
+            <span class="material-symbols-outlined">location_on</span>
+            <div>
+              <strong>Entrega local</strong>
+              <p>Disponível somente para endereços em Fortaleza.</p>
+            </div>
+          </article>
+          <article>
+            <span class="material-symbols-outlined">storefront</span>
+            <div>
+              <strong>Retire no Domus</strong>
+              <p>Pedido pronto na Rua Monsenhor Agostinho, 1463.</p>
+            </div>
+          </article>
+          <article>
+            <span class="material-symbols-outlined">schedule</span>
+            <div>
+              <strong>Padaria fresca</strong>
+              <p>Reserve pães, bolos, doces e salgados da produção própria.</p>
+            </div>
+          </article>
+        </section>
+
+        <nav class="category-nav" aria-label="Categorias">
+          <button class="active" type="button" data-filter="all">Tudo</button>
+          <button type="button" data-filter="Hortifruti">Hortifruti</button>
+          <button type="button" data-filter="Laticinios">Laticinios</button>
+          <button type="button" data-filter="Mercearia">Mercearia</button>
+          <button type="button" data-filter="Bebidas">Bebidas</button>
+          <button type="button" data-filter="Limpeza">Limpeza</button>
+          <button type="button" data-filter="Padaria">Padaria Domus</button>
+        </nav>
+
+        <section class="split-sections" id="market">
+          <div class="section-heading">
+            <div>
+              <span>Supermercado virtual</span>
+              <h2>Produtos do mercado</h2>
+            </div>
+            <button class="text-button" type="button" data-filter="all">Ver tudo</button>
+          </div>
+          <div class="product-grid" id="marketGrid"></div>
+        </section>
+
+        <section class="bakery-banner" id="bakery">
+          <img
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDICDTJTCLHnaL7ctyKbuKTkJA5IlBohCceCJtinlMhc2iTEZi-oyP2zl1fz8x7YYuYruRgfDk8lTIUxmJiLVZPbBr5L6ik8fUwG-w7ISU3mL5Il3lm9VLdKZh7g52Ev3Mzz2bUbmp4YVQTkycogJE3e9RkvMe4ws692Ex0-R_djglaa1m6cROAY8UmHYmohX_oy3H-eI9a3YhihbiFn1h6lkNWtj83UKPh1i-XS8xVwG396o02kusYMkuWWBeEB6-DodER_mQ3Qbo"
+            alt=""
+          />
+          <div>
+            <span class="alert-badge light">Padaria Domus</span>
+            <h2>Assados da produção própria em uma área separada.</h2>
+            <p>Monte sua cesta de pães, bolos e salgados junto do pedido principal.</p>
+          </div>
+        </section>
+
+        <section class="split-sections">
+          <div class="section-heading">
+            <div>
+              <span>Forno Domus</span>
+              <h2>Padaria do próprio mercado</h2>
+            </div>
+            <button class="text-button" type="button" data-filter="Padaria">Ver padaria</button>
+          </div>
+          <div class="product-grid" id="bakeryGrid"></div>
+        </section>
+
+        <section class="checkout-layout" id="cart">
+          <div>
+            <div class="section-heading">
+              <div>
+                <span>Pedido</span>
+                <h2>Meu carrinho</h2>
+              </div>
+            </div>
+            <div class="cart-list" id="cartList"></div>
+          </div>
+
+          <aside class="checkout-panel">
+            <h2>Finalizar pedido</h2>
+            <div class="mode-toggle wide" role="group" aria-label="Entrega ou retirada">
+              <button class="active" type="button" data-mode="delivery">Entregar em casa</button>
+              <button type="button" data-mode="pickup">Buscar na loja</button>
+            </div>
+
+            <form class="address-form" id="addressForm">
+              <label>
+                Endereço de entrega
+                <input id="streetInput" type="text" placeholder="Rua, numero e complemento" />
+              </label>
+              <label>
+                Bairro
+                <input id="districtInput" type="text" placeholder="Ex.: Parque São José" />
+              </label>
+              <label>
+                Cidade
+                <input id="cityInput" type="text" value="Fortaleza" />
+              </label>
+              <p class="delivery-note" id="deliveryNote">
+                A entrega do Domus está disponível apenas dentro de Fortaleza.
+              </p>
+            </form>
+
+            <div class="pickup-box" id="pickupBox" hidden>
+              <strong>Retirada no supermercado</strong>
+              <p>Domus Supermercado, Rua Monsenhor Agostinho, 1463 - Parque São José, Fortaleza - CE, 60730-275.</p>
+            </div>
+
+            <dl class="summary-list">
+              <div>
+                <dt>Subtotal</dt>
+                <dd id="subtotal">R$ 0,00</dd>
+              </div>
+              <div>
+                <dt>Entrega</dt>
+                <dd id="deliveryFee">R$ 7,90</dd>
+              </div>
+              <div>
+                <dt>Total</dt>
+                <dd id="total">R$ 0,00</dd>
+              </div>
+            </dl>
+
+            <button class="primary-button full" type="button" id="checkoutButton">
+              <span class="material-symbols-outlined">check_circle</span>
+              Confirmar encomenda
+            </button>
+          </aside>
+        </section>
+      </main>
+
+      <nav class="bottom-nav" aria-label="Menu inferior">
+        <button class="active" type="button" data-nav="home">
+          <span class="material-symbols-outlined">home</span>
+          Inicio
+        </button>
+        <button type="button" data-nav="market">
+          <span class="material-symbols-outlined">grid_view</span>
+          Mercado
+        </button>
+        <button type="button" data-nav="bakery">
+          <span class="material-symbols-outlined">bakery_dining</span>
+          Padaria
+        </button>
+        <button type="button" data-nav="cart">
+          <span class="material-symbols-outlined">shopping_cart</span>
+          Carrinho
+          <small id="cartBadge">0</small>
+        </button>
+      </nav>
+    </div>
+
+    <aside class="account-drawer" id="accountDrawer" aria-hidden="true">
+      <div class="drawer-scrim" data-close-account></div>
+      <section class="drawer-panel">
+        <button class="icon-button close" type="button" data-close-account aria-label="Fechar">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+        <div class="account-head">
+          <span class="logo-mark">Domus</span>
+          <h2>Conta Domus</h2>
+          <p>Entre ou crie sua conta para salvar pedidos, endereços e preferências.</p>
+        </div>
+        <div class="auth-tabs">
+          <button class="active" type="button" data-auth-tab="login">Login</button>
+          <button type="button" data-auth-tab="signup">Sign in</button>
+        </div>
+        <form class="auth-form active" id="loginForm">
+          <label>
+            E-mail ou telefone
+            <input type="text" placeholder="voce@email.com" />
+          </label>
+          <label>
+            Senha
+            <input type="password" placeholder="Sua senha" />
+          </label>
+          <button class="primary-button full" type="button">Entrar</button>
+        </form>
+        <form class="auth-form" id="signupForm">
+          <label>
+            Nome completo
+            <input type="text" placeholder="Seu nome" />
+          </label>
+          <label>
+            E-mail
+            <input type="email" placeholder="voce@email.com" />
+          </label>
+          <label>
+            Telefone
+            <input type="tel" placeholder="(85) 99999-0000" />
+          </label>
+          <button class="primary-button full" type="button">Criar conta</button>
+        </form>
+        <div class="account-links">
+          <button type="button" data-nav="cart" data-close-account>Meus pedidos</button>
+          <button type="button" data-nav="cart" data-close-account>Endereços de entrega</button>
+          <button type="button" data-nav="bakery" data-close-account>Padaria Domus</button>
+        </div>
+      </section>
+    </aside>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="app.js"></script>
+  </body>
+</html>
