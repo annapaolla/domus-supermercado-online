@@ -1,9 +1,10 @@
-const CACHE_NAME = "domus-supermercado-v1";
+const CACHE_NAME = "domus-supermercado-v2";
 const APP_SHELL = [
   "./",
   "./index.html",
   "./styles.css",
   "./app.js",
+  "./supabase-config.js",
   "./manifest.webmanifest",
   "./offline.html",
   "./icons/icon.svg"

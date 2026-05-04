@@ -122,6 +122,60 @@ const cityInput = document.querySelector("#cityInput");
 const deliveryNote = document.querySelector("#deliveryNote");
 const toast = document.querySelector("#toast");
 const drawer = document.querySelector("#accountDrawer");
+const accountAuth = document.querySelector("#accountAuth");
+const profilePanel = document.querySelector("#profilePanel");
+const profileName = document.querySelector("#profileName");
+const signupName = document.querySelector("#signupName");
+const signupEmail = document.querySelector("#signupEmail");
+const signupPhone = document.querySelector("#signupPhone");
+const signupPassword = document.querySelector("#signupPassword");
+const loginEmail = document.querySelector("#loginEmail");
+const loginPassword = document.querySelector("#loginPassword");
+const profileEditName = document.querySelector("#profileEditName");
+const profilePhotoUrl = document.querySelector("#profilePhotoUrl");
+const profilePronouns = document.querySelector("#profilePronouns");
+const profileNotes = document.querySelector("#profileNotes");
+const paymentDetail = document.querySelector("#paymentDetail");
+const accountIntro = document.querySelector("#accountIntro");
+const profileAddressName = document.querySelector("#profileAddressName");
+const profileAddressStreet = document.querySelector("#profileAddressStreet");
+const profileAddressDistrict = document.querySelector("#profileAddressDistrict");
+const savedAddresses = document.querySelector("#savedAddresses");
+const authStatus = document.querySelector("#authStatus");
+const profilePhotoButton = document.querySelector(".profile-photo-placeholder");
+const profilePillLabel = document.querySelector(".profile-pill span:last-child");
+
+const supabaseSettings = window.DOMUS_SUPABASE || {};
+const hasSupabaseConfig =
+  Boolean(window.supabase) &&
+  Boolean(supabaseSettings.url) &&
+  Boolean(supabaseSettings.anonKey) &&
+  !supabaseSettings.url.includes("YOUR_PROJECT_REF") &&
+  !supabaseSettings.anonKey.includes("YOUR_SUPABASE_ANON_KEY");
+const supabaseClient = hasSupabaseConfig
+  ? window.supabase.createClient(supabaseSettings.url, supabaseSettings.anonKey)
+  : null;
+
+const profileState = {
+  userId: null,
+  profile: {
+    name: "",
+    photoUrl: "",
+    pronouns: "",
+    notes: "",
+  },
+  selectedAddress: null,
+  paymentMethod: "credit",
+  selectedCard: {
+    credit: null,
+    debit: null,
+  },
+  addresses: [],
+  cards: {
+    credit: [],
+    debit: [],
+  },
+};
 
 function money(value) {
   return value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
@@ -268,6 +322,418 @@ function navigateTo(target) {
   });
 }
 
+function setAuthStatus(message, type = "") {
+  authStatus.textContent = message;
+  authStatus.dataset.type = type;
+}
+
+function supabaseReady() {
+  if (supabaseClient) return true;
+  setAuthStatus("Preencha o arquivo supabase-config.js com a URL e a chave anon pública do Supabase.", "error");
+  showToast("Configure o Supabase para criar contas reais.");
+  return false;
+}
+
+function emptyAccountState(userId = null) {
+  profileState.userId = userId;
+  profileState.profile = {
+    name: "",
+    photoUrl: "",
+    pronouns: "",
+    notes: "",
+  };
+  profileState.selectedAddress = null;
+  profileState.paymentMethod = "credit";
+  profileState.selectedCard = {
+    credit: null,
+    debit: null,
+  };
+  profileState.addresses = [];
+  profileState.cards = {
+    credit: [],
+    debit: [],
+  };
+}
+
+function accountStorageKey(userId) {
+  return `domus-profile-${userId}`;
+}
+
+function loadAccountState(user) {
+  emptyAccountState(user.id);
+
+  try {
+    const saved = JSON.parse(localStorage.getItem(accountStorageKey(user.id)) || "{}");
+    Object.assign(profileState.profile, saved.profile || {});
+    profileState.selectedAddress = saved.selectedAddress || null;
+    profileState.paymentMethod = saved.paymentMethod || "credit";
+    profileState.selectedCard = saved.selectedCard || { credit: null, debit: null };
+    profileState.addresses = Array.isArray(saved.addresses) ? saved.addresses : [];
+    profileState.cards = saved.cards || { credit: [], debit: [] };
+  } catch {
+    emptyAccountState(user.id);
+  }
+
+  const metadata = user.user_metadata || {};
+  profileState.profile.name =
+    profileState.profile.name || metadata.full_name || metadata.name || signupName.value.trim() || "Perfil Domus";
+  profileState.profile.photoUrl = profileState.profile.photoUrl || metadata.avatar_url || "";
+  profileState.profile.pronouns = profileState.profile.pronouns || metadata.pronouns || "";
+  profileState.profile.notes = profileState.profile.notes || metadata.notes || "";
+}
+
+function saveAccountState() {
+  if (!profileState.userId) return;
+  localStorage.setItem(
+    accountStorageKey(profileState.userId),
+    JSON.stringify({
+      profile: profileState.profile,
+      selectedAddress: profileState.selectedAddress,
+      paymentMethod: profileState.paymentMethod,
+      selectedCard: profileState.selectedCard,
+      addresses: profileState.addresses,
+      cards: profileState.cards,
+    })
+  );
+}
+
+function renderProfileCard() {
+  const name = profileState.profile.name || "Perfil Domus";
+  profileName.textContent = name;
+  profileEditName.value = name === "Perfil Domus" ? "" : name;
+  profilePhotoUrl.value = profileState.profile.photoUrl || "";
+  profilePronouns.value = profileState.profile.pronouns || "";
+  profileNotes.value = profileState.profile.notes || "";
+
+  if (profileState.profile.photoUrl) {
+    profilePhotoButton.innerHTML = `<img src="${profileState.profile.photoUrl}" alt="Foto de perfil" onerror="this.parentElement.innerHTML='<span class=&quot;material-symbols-outlined&quot;>add_a_photo</span>Foto'" />`;
+  } else {
+    profilePhotoButton.innerHTML = '<span class="material-symbols-outlined">add_a_photo</span>Foto';
+  }
+}
+
+function showProfile(user) {
+  if (user) loadAccountState(user);
+  renderProfileCard();
+  renderSavedAddresses();
+  setPayment(profileState.paymentMethod);
+  accountAuth.hidden = true;
+  profilePanel.hidden = false;
+  accountIntro.textContent = "Perfil aberto para cadastrar endereços e formas de pagamento.";
+  profilePillLabel.textContent = "Perfil";
+  setAuthStatus("");
+  showToast("Perfil Domus carregado.");
+}
+
+async function loginAccount() {
+  if (!supabaseReady()) return;
+
+  const email = loginEmail.value.trim();
+  const password = loginPassword.value.trim();
+  if (!email || !password) {
+    setAuthStatus("Preencha e-mail e senha para entrar.", "error");
+    return;
+  }
+
+  setAuthStatus("Entrando na conta Domus...");
+  const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+  if (error) {
+    setAuthStatus(error.message, "error");
+    showToast("Não foi possível entrar.");
+    return;
+  }
+
+  showProfile(data.user);
+  showToast("Conta conectada.");
+}
+
+async function createAccount() {
+  if (!supabaseReady()) return;
+
+  const name = signupName.value.trim();
+  const email = signupEmail.value.trim();
+  const phone = signupPhone.value.trim();
+  const password = signupPassword.value.trim();
+
+  if (!name || !email || !password) {
+    setAuthStatus("Preencha nome, e-mail e senha para criar a conta.", "error");
+    return;
+  }
+
+  if (password.length < 6) {
+    setAuthStatus("Use uma senha com pelo menos 6 caracteres.", "error");
+    return;
+  }
+
+  setAuthStatus("Criando sua conta Domus...");
+  const { data, error } = await supabaseClient.auth.signUp({
+    email,
+    password,
+    options: {
+      data: {
+        full_name: name,
+        phone,
+      },
+    },
+  });
+
+  if (error) {
+    setAuthStatus(error.message, "error");
+    showToast("Não foi possível criar a conta.");
+    return;
+  }
+
+  if (data.session && data.user) {
+    showProfile(data.user);
+    showToast("Conta criada.");
+    return;
+  }
+
+  setAuthStatus("Conta criada. Confirme o e-mail se o Supabase pedir antes de entrar.", "success");
+  showToast("Cadastro enviado.");
+}
+
+async function saveProfile() {
+  const name = profileEditName.value.trim() || "Perfil Domus";
+  profileState.profile = {
+    name,
+    photoUrl: profilePhotoUrl.value.trim(),
+    pronouns: profilePronouns.value.trim(),
+    notes: profileNotes.value.trim(),
+  };
+  saveAccountState();
+  renderProfileCard();
+
+  if (supabaseClient) {
+    const { error } = await supabaseClient.auth.updateUser({
+      data: {
+        full_name: profileState.profile.name,
+        avatar_url: profileState.profile.photoUrl,
+        pronouns: profileState.profile.pronouns,
+        notes: profileState.profile.notes,
+      },
+    });
+    if (error) {
+      showToast("Perfil salvo neste aparelho. Supabase não atualizou.");
+      return;
+    }
+  }
+
+  showToast("Perfil salvo.");
+}
+
+async function loadSupabaseSession() {
+  if (!supabaseClient) {
+    setAuthStatus("Supabase ainda não configurado. Adicione URL e anon key pública em supabase-config.js.", "error");
+    return;
+  }
+
+  const { data } = await supabaseClient.auth.getSession();
+  if (data.session?.user) showProfile(data.session.user);
+
+  supabaseClient.auth.onAuthStateChange((_event, session) => {
+    if (session?.user) showProfile(session.user);
+  });
+}
+
+async function logout() {
+  if (supabaseClient) await supabaseClient.auth.signOut();
+  emptyAccountState();
+  renderSavedAddresses();
+  setPayment("credit");
+  profilePanel.hidden = true;
+  accountAuth.hidden = false;
+  accountIntro.textContent = "Entre ou crie sua conta para salvar pedidos, endereços e preferências.";
+  profilePillLabel.textContent = "Entrar";
+  setAuthStatus("");
+  showToast("Você saiu da conta Domus.");
+}
+
+function renderSavedAddresses() {
+  if (!profileState.addresses.length) {
+    savedAddresses.innerHTML = "<p>Nenhum endereço cadastrado ainda.</p>";
+    return;
+  }
+
+  savedAddresses.innerHTML = profileState.addresses
+    .map(
+      (address) => `
+        <button class="${profileState.selectedAddress === address.id ? "selected" : ""}" type="button" data-select-address="${address.id}">
+          <strong>${address.name}</strong>
+          <span>${address.street}</span>
+          <small>${address.district}</small>
+        </button>
+      `
+    )
+    .join("");
+}
+
+function saveAddress() {
+  const name = profileAddressName.value.trim() || "Endereço";
+  const street = profileAddressStreet.value.trim();
+  const district = profileAddressDistrict.value.trim();
+
+  if (!street || !district) {
+    showToast("Preencha rua e bairro para salvar o endereço.");
+    return;
+  }
+
+  const address = { id: `address-${Date.now()}`, name, street, district };
+  profileState.addresses.push(address);
+  profileState.selectedAddress = address.id;
+  saveAccountState();
+  renderSavedAddresses();
+  profileAddressName.value = "";
+  profileAddressStreet.value = "";
+  profileAddressDistrict.value = "";
+  showToast("Endereço salvo e selecionado.");
+}
+
+function selectAddress(id) {
+  profileState.selectedAddress = id;
+  saveAccountState();
+  renderSavedAddresses();
+  showToast("Endereço selecionado para os próximos pedidos.");
+}
+
+function cardLabel(type) {
+  return type === "credit" ? "crédito" : "débito";
+}
+
+function renderSavedCards(type) {
+  const cards = profileState.cards[type];
+  const label = cardLabel(type);
+
+  if (!cards.length) {
+    return `<div class="saved-cards"><p>Nenhum cartão de ${label} salvo ainda.</p></div>`;
+  }
+
+  return `
+    <div class="saved-cards" aria-label="Cartões de ${label} salvos">
+      ${cards
+        .map(
+          (card) => `
+            <button class="${profileState.selectedCard[type] === card.id ? "selected" : ""}" type="button" data-select-card="${card.id}" data-card-type="${type}">
+              <strong>${card.name}</strong>
+              <span>${type === "credit" ? "Crédito" : "Débito"} final ${card.lastDigits}</span>
+              <small>Validade ${card.expiry}</small>
+            </button>
+          `
+        )
+        .join("")}
+    </div>
+  `;
+}
+
+function cardForm(type) {
+  const label = cardLabel(type);
+  return `
+    ${renderSavedCards(type)}
+    <form class="profile-form payment-form">
+      <label>
+        Número do cartão de ${label}
+        <input data-card-number type="text" inputmode="numeric" placeholder="0000 0000 0000 0000" />
+      </label>
+      <label>
+        Nome impresso no cartão
+        <input data-card-name type="text" placeholder="Nome completo" />
+      </label>
+      <div class="compact-fields">
+        <label>
+          Segurança
+          <input data-card-security type="text" inputmode="numeric" placeholder="CVV" />
+        </label>
+        <label>
+          Validade
+          <input data-card-expiry type="text" placeholder="MM/AA" />
+        </label>
+      </div>
+      <button class="secondary-action" type="button" data-save-card="${type}">Salvar cartão de ${label}</button>
+    </form>
+  `;
+}
+
+function saveCard(type) {
+  const number = paymentDetail.querySelector("[data-card-number]").value.trim();
+  const name = paymentDetail.querySelector("[data-card-name]").value.trim();
+  const security = paymentDetail.querySelector("[data-card-security]").value.trim();
+  const expiry = paymentDetail.querySelector("[data-card-expiry]").value.trim();
+
+  if (!number || !name || !security || !expiry) {
+    showToast("Preencha todos os dados do cartão.");
+    return;
+  }
+
+  const digits = number.replace(/\D/g, "");
+  const lastDigits = digits.slice(-4) || "0000";
+  const existing = profileState.cards[type].find(
+    (item) => item.name === name && item.lastDigits === lastDigits && item.expiry === expiry
+  );
+
+  if (existing) {
+    profileState.selectedCard[type] = existing.id;
+    saveAccountState();
+    setPayment(type);
+    showToast(`Cartão de ${cardLabel(type)} selecionado.`);
+    return;
+  }
+
+  const card = {
+    id: `${type}-${Date.now()}`,
+    name,
+    lastDigits,
+    expiry,
+  };
+
+  profileState.cards[type].push(card);
+  profileState.selectedCard[type] = card.id;
+  saveAccountState();
+  setPayment(type);
+  showToast(`Cartão de ${cardLabel(type)} salvo e selecionado.`);
+}
+
+function selectCard(type, id) {
+  profileState.selectedCard[type] = id;
+  saveAccountState();
+  setPayment(type);
+  showToast(`Cartão de ${cardLabel(type)} selecionado.`);
+}
+
+function setPayment(method) {
+  profileState.paymentMethod = method;
+  document.querySelectorAll("[data-payment]").forEach((button) => {
+    button.classList.toggle("active", button.dataset.payment === method);
+  });
+
+  if (method === "credit" || method === "debit") {
+    paymentDetail.innerHTML = cardForm(method);
+    return;
+  }
+
+  if (method === "pix") {
+    paymentDetail.innerHTML = `
+      <div class="pix-note">
+        <span class="material-symbols-outlined">qr_code_2</span>
+        <div>
+          <strong>Pix na finalização</strong>
+          <p>O QR Code será gerado somente na hora de confirmar e pagar o pedido.</p>
+        </div>
+      </div>
+    `;
+    return;
+  }
+
+  paymentDetail.innerHTML = `
+    <form class="profile-form payment-form">
+      <label>
+        E-mail da conta PayPal
+        <input type="email" placeholder="paypal@email.com" />
+      </label>
+      <button class="secondary-action" type="button">Conectar PayPal</button>
+    </form>
+  `;
+}
+
 document.addEventListener("click", (event) => {
   const addButton = event.target.closest("[data-add]");
   const decButton = event.target.closest("[data-dec]");
@@ -275,11 +741,29 @@ document.addEventListener("click", (event) => {
   const filterButton = event.target.closest("[data-filter]");
   const navButton = event.target.closest("[data-nav]");
   const authTab = event.target.closest("[data-auth-tab]");
+  const loginButton = event.target.closest("[data-login-account]");
+  const createAccountButton = event.target.closest("[data-create-account]");
+  const saveProfileButton = event.target.closest("[data-save-profile]");
+  const paymentButton = event.target.closest("[data-payment]");
+  const logoutButton = event.target.closest("[data-logout]");
+  const saveAddressButton = event.target.closest("[data-save-address]");
+  const selectAddressButton = event.target.closest("[data-select-address]");
+  const saveCardButton = event.target.closest("[data-save-card]");
+  const selectCardButton = event.target.closest("[data-select-card]");
 
   if (addButton || decButton) return;
   if (modeButton) setMode(modeButton.dataset.mode);
   if (filterButton) setFilter(filterButton.dataset.filter);
   if (navButton) navigateTo(navButton.dataset.nav);
+  if (loginButton) loginAccount();
+  if (createAccountButton) createAccount();
+  if (saveProfileButton) saveProfile();
+  if (paymentButton) setPayment(paymentButton.dataset.payment);
+  if (logoutButton) logout();
+  if (saveAddressButton) saveAddress();
+  if (selectAddressButton) selectAddress(selectAddressButton.dataset.selectAddress);
+  if (saveCardButton) saveCard(saveCardButton.dataset.saveCard);
+  if (selectCardButton) selectCard(selectCardButton.dataset.cardType, selectCardButton.dataset.selectCard);
 
   if (event.target.closest("[data-open-account]")) {
     drawer.classList.add("open");
@@ -298,6 +782,15 @@ document.addEventListener("click", (event) => {
     document.querySelector("#loginForm").classList.toggle("active", authTab.dataset.authTab === "login");
     document.querySelector("#signupForm").classList.toggle("active", authTab.dataset.authTab === "signup");
   }
+});
+
+paymentDetail.addEventListener("focusout", (event) => {
+  if (!event.target.matches("[data-card-expiry]")) return;
+  const number = paymentDetail.querySelector("[data-card-number]")?.value.trim();
+  const name = paymentDetail.querySelector("[data-card-name]")?.value.trim();
+  const security = paymentDetail.querySelector("[data-card-security]")?.value.trim();
+  const expiry = paymentDetail.querySelector("[data-card-expiry]")?.value.trim();
+  if (number && name && security && expiry) saveCard(profileState.paymentMethod);
 });
 
 cityInput.addEventListener("input", () => {
@@ -326,6 +819,8 @@ document.querySelector("#checkoutButton").addEventListener("click", () => {
 renderProducts();
 renderCart();
 setMode("delivery");
+setPayment("credit");
+loadSupabaseSession();
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {

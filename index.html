@@ -203,47 +203,148 @@
         <div class="account-head">
           <span class="logo-mark">Domus</span>
           <h2>Conta Domus</h2>
-          <p>Entre ou crie sua conta para salvar pedidos, endereços e preferências.</p>
+          <p id="accountIntro">Entre ou crie sua conta para salvar pedidos, endereços e preferências.</p>
         </div>
-        <div class="auth-tabs">
-          <button class="active" type="button" data-auth-tab="login">Login</button>
-          <button type="button" data-auth-tab="signup">Sign in</button>
+        <div class="account-auth" id="accountAuth">
+          <div class="auth-tabs">
+            <button class="active" type="button" data-auth-tab="login">Login</button>
+            <button type="button" data-auth-tab="signup">Cadastro</button>
+          </div>
+          <form class="auth-form active" id="loginForm">
+            <label>
+              E-mail
+              <input id="loginEmail" type="email" placeholder="voce@email.com" autocomplete="email" />
+            </label>
+            <label>
+              Senha
+              <input id="loginPassword" type="password" placeholder="Sua senha" autocomplete="current-password" />
+            </label>
+            <button class="primary-button full" type="button" data-login-account>Entrar</button>
+          </form>
+          <form class="auth-form" id="signupForm">
+            <label>
+              Nome completo
+              <input id="signupName" type="text" placeholder="Seu nome" />
+            </label>
+            <label>
+              E-mail
+              <input id="signupEmail" type="email" placeholder="voce@email.com" autocomplete="email" />
+            </label>
+            <label>
+              Telefone
+              <input id="signupPhone" type="tel" placeholder="(85) 99999-0000" autocomplete="tel" />
+            </label>
+            <label>
+              Senha
+              <input id="signupPassword" type="password" placeholder="Crie uma senha" autocomplete="new-password" />
+            </label>
+            <button class="primary-button full" type="button" data-create-account>Criar conta</button>
+          </form>
+          <p class="auth-status" id="authStatus" role="status" aria-live="polite"></p>
         </div>
-        <form class="auth-form active" id="loginForm">
-          <label>
-            E-mail ou telefone
-            <input type="text" placeholder="voce@email.com" />
-          </label>
-          <label>
-            Senha
-            <input type="password" placeholder="Sua senha" />
-          </label>
-          <button class="primary-button full" type="button">Entrar</button>
-        </form>
-        <form class="auth-form" id="signupForm">
-          <label>
-            Nome completo
-            <input type="text" placeholder="Seu nome" />
-          </label>
-          <label>
-            E-mail
-            <input type="email" placeholder="voce@email.com" />
-          </label>
-          <label>
-            Telefone
-            <input type="tel" placeholder="(85) 99999-0000" />
-          </label>
-          <button class="primary-button full" type="button">Criar conta</button>
-        </form>
-        <div class="account-links">
-          <button type="button" data-nav="cart" data-close-account>Meus pedidos</button>
-          <button type="button" data-nav="cart" data-close-account>Endereços de entrega</button>
-          <button type="button" data-nav="bakery" data-close-account>Padaria Domus</button>
-        </div>
+
+        <section class="profile-panel" id="profilePanel" hidden>
+          <div class="profile-card">
+            <button class="profile-photo-placeholder" type="button">
+              <span class="material-symbols-outlined">add_a_photo</span>
+              Foto
+            </button>
+            <div>
+              <span>Editar perfil</span>
+              <h3 id="profileName">Perfil Domus</h3>
+              <p>Cadastre foto, nome e preferências quando quiser.</p>
+            </div>
+          </div>
+
+          <div class="profile-section">
+            <h4>Dados pessoais</h4>
+            <form class="profile-form">
+              <label>
+                Foto de perfil
+                <input id="profilePhotoUrl" type="url" placeholder="Adicionar URL da foto depois" />
+              </label>
+              <label>
+                Nome
+                <input id="profileEditName" type="text" placeholder="Seu nome" />
+              </label>
+              <label>
+                Pronomes
+                <input id="profilePronouns" type="text" placeholder="Ex.: ela/dela, ele/dele, elu/delu" />
+              </label>
+              <label>
+                Observações
+                <input id="profileNotes" type="text" placeholder="Preferências do cadastro" />
+              </label>
+              <button class="secondary-action" type="button" data-save-profile>Salvar perfil</button>
+            </form>
+          </div>
+
+          <div class="profile-section">
+            <h4>Cadastrar endereço</h4>
+            <form class="profile-form" id="addressRegisterForm">
+              <label>
+                Nome do endereço
+                <input id="profileAddressName" type="text" placeholder="Casa, trabalho ou outro" />
+              </label>
+              <label>
+                Rua, número e complemento
+                <input id="profileAddressStreet" type="text" placeholder="Digite seu endereço" />
+              </label>
+              <label>
+                Bairro
+                <input id="profileAddressDistrict" type="text" placeholder="Ex.: Parque São José" />
+              </label>
+              <button class="secondary-action" type="button" data-save-address>Salvar endereço</button>
+            </form>
+            <div class="saved-addresses" id="savedAddresses" aria-live="polite">
+              <p>Nenhum endereço cadastrado ainda.</p>
+            </div>
+          </div>
+
+          <div class="profile-section">
+            <h4>Cadastrar pagamento</h4>
+            <div class="payment-options" role="group" aria-label="Forma de pagamento">
+              <button class="active" type="button" data-payment="credit">Crédito</button>
+              <button type="button" data-payment="debit">Débito</button>
+              <button type="button" data-payment="pix">Pix</button>
+              <button type="button" data-payment="paypal">PayPal</button>
+            </div>
+            <div class="payment-detail" id="paymentDetail">
+              <div class="saved-cards">
+                <p>Nenhum cartão de crédito salvo ainda.</p>
+              </div>
+              <form class="profile-form payment-form">
+                <label>
+                  Número do cartão de crédito
+                  <input data-card-number type="text" inputmode="numeric" placeholder="0000 0000 0000 0000" />
+                </label>
+                <label>
+                  Nome impresso no cartão
+                  <input data-card-name type="text" placeholder="Nome completo" />
+                </label>
+                <div class="compact-fields">
+                  <label>
+                    Segurança
+                    <input data-card-security type="text" inputmode="numeric" placeholder="CVV" />
+                  </label>
+                  <label>
+                    Validade
+                    <input data-card-expiry type="text" placeholder="MM/AA" />
+                  </label>
+                </div>
+                <button class="secondary-action" type="button" data-save-card="credit">Salvar cartão de crédito</button>
+              </form>
+            </div>
+          </div>
+
+          <button class="logout-button" type="button" data-logout>Sair da conta</button>
+        </section>
       </section>
     </aside>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="app.js?v=supabase-auth-1"></script>
   </body>
 </html>
