@@ -105,7 +105,6 @@ const products = [
 
 const state = {
   filter: "all",
-  search: "",
   mode: "delivery",
   cart: new Map(),
 };
@@ -131,8 +130,7 @@ function money(value) {
 function productMatches(product, area) {
   const byArea = area === "bakery" ? product.category === "Padaria" : product.category !== "Padaria";
   const byFilter = state.filter === "all" || product.category === state.filter;
-  const bySearch = product.name.toLowerCase().includes(state.search.toLowerCase());
-  return byArea && byFilter && bySearch;
+  return byArea && byFilter;
 }
 
 function renderProduct(product) {
@@ -300,11 +298,6 @@ document.addEventListener("click", (event) => {
     document.querySelector("#loginForm").classList.toggle("active", authTab.dataset.authTab === "login");
     document.querySelector("#signupForm").classList.toggle("active", authTab.dataset.authTab === "signup");
   }
-});
-
-document.querySelector("#searchInput").addEventListener("input", (event) => {
-  state.search = event.target.value;
-  renderProducts();
 });
 
 cityInput.addEventListener("input", () => {

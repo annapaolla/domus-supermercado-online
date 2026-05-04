@@ -176,7 +176,6 @@ main {
 
 .hero-copy p,
 .bakery-banner p,
-.service-strip p,
 .pickup-box p,
 .account-head p {
   margin: 0;
@@ -264,32 +263,6 @@ main {
   background: linear-gradient(90deg, rgba(255, 215, 0, 0.3), rgba(0, 0, 0, 0.1));
 }
 
-.search-row {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 14px;
-  margin: 24px 0;
-}
-
-.search-box {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  min-height: 58px;
-  padding: 0 18px;
-  background: white;
-  border-radius: 999px;
-  box-shadow: var(--shadow);
-}
-
-.search-box input {
-  width: 100%;
-  border: 0;
-  outline: 0;
-  min-width: 0;
-  color: var(--ink);
-}
-
 .mode-toggle {
   display: inline-grid;
   grid-template-columns: 1fr 1fr;
@@ -320,39 +293,9 @@ main {
   box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
 }
 
-.service-strip {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
-  margin-bottom: 24px;
-}
-
-.service-strip article {
-  display: flex;
-  gap: 12px;
-  align-items: flex-start;
-  padding: 16px;
-  border-radius: 14px;
-  background: white;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
-}
-
-.service-strip span {
-  color: var(--green);
-}
-
-.service-strip strong {
-  display: block;
-  font-family: "Plus Jakarta Sans", Arial, sans-serif;
-}
-
-.service-strip p {
-  color: var(--muted);
-  font-size: 13px;
-}
-
 .category-nav {
   display: flex;
+  margin-top: 24px;
   gap: 10px;
   overflow-x: auto;
   padding: 2px 0 14px;
@@ -866,7 +809,6 @@ input:focus {
     min-height: 210px;
   }
 
-  .service-strip,
   .product-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -912,18 +854,9 @@ input:focus {
     font-size: 32px;
   }
 
-  .search-row {
-    grid-template-columns: 1fr;
-  }
-
-  .service-strip,
   .product-grid {
     grid-template-columns: 1fr 1fr;
     gap: 12px;
-  }
-
-  .service-strip article {
-    grid-column: span 2;
   }
 
   .product-image {
