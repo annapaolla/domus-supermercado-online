@@ -118,6 +118,8 @@ const deliveryFeeEl = document.querySelector("#deliveryFee");
 const totalEl = document.querySelector("#total");
 const addressForm = document.querySelector("#addressForm");
 const pickupBox = document.querySelector("#pickupBox");
+const streetInput = document.querySelector("#streetInput");
+const districtInput = document.querySelector("#districtInput");
 const cityInput = document.querySelector("#cityInput");
 const deliveryNote = document.querySelector("#deliveryNote");
 const toast = document.querySelector("#toast");
@@ -132,15 +134,23 @@ const signupPassword = document.querySelector("#signupPassword");
 const loginEmail = document.querySelector("#loginEmail");
 const loginPassword = document.querySelector("#loginPassword");
 const profileEditName = document.querySelector("#profileEditName");
-const profilePhotoUrl = document.querySelector("#profilePhotoUrl");
+const profileEditForm = document.querySelector("#profileEditForm");
+const profilePhotoFile = document.querySelector("#profilePhotoFile");
 const profilePronouns = document.querySelector("#profilePronouns");
 const profileNotes = document.querySelector("#profileNotes");
+const profilePhotoFileName = document.querySelector("#profilePhotoFileName");
+const profileHomeView = document.querySelector("#profileHomeView");
+const profileEditView = document.querySelector("#profileEditView");
+const profileEditToggle = document.querySelector("#profileEditToggle");
 const paymentDetail = document.querySelector("#paymentDetail");
 const accountIntro = document.querySelector("#accountIntro");
 const profileAddressName = document.querySelector("#profileAddressName");
 const profileAddressStreet = document.querySelector("#profileAddressStreet");
 const profileAddressDistrict = document.querySelector("#profileAddressDistrict");
 const savedAddresses = document.querySelector("#savedAddresses");
+const checkoutSavedAddresses = document.querySelector("#checkoutSavedAddresses");
+const checkoutPaymentSummary = document.querySelector("#checkoutPaymentSummary");
+const saveAddressButton = document.querySelector("[data-save-address]");
 const authStatus = document.querySelector("#authStatus");
 const profilePhotoButton = document.querySelector(".profile-photo-placeholder");
 const profilePillLabel = document.querySelector(".profile-pill span:last-child");
@@ -176,6 +186,8 @@ const profileState = {
     debit: [],
   },
 };
+
+let editingAddressId = null;
 
 function money(value) {
   return value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
@@ -296,6 +308,7 @@ function setMode(mode) {
   });
   addressForm.hidden = mode !== "delivery";
   pickupBox.hidden = mode !== "pickup";
+  renderCheckoutSavedAddresses();
   renderCart();
 }
 
@@ -401,14 +414,30 @@ function renderProfileCard() {
   const name = profileState.profile.name || "Perfil Domus";
   profileName.textContent = name;
   profileEditName.value = name === "Perfil Domus" ? "" : name;
-  profilePhotoUrl.value = profileState.profile.photoUrl || "";
+  profilePhotoFile.value = "";
   profilePronouns.value = profileState.profile.pronouns || "";
   profileNotes.value = profileState.profile.notes || "";
+  const hasProfileData = Boolean(
+    (profileState.profile.name && profileState.profile.name !== "Perfil Domus") ||
+      profileState.profile.photoUrl ||
+      profileState.profile.pronouns ||
+      profileState.profile.notes
+  );
+  profileEditToggle.textContent = hasProfileData
+    ? "Alterar informações do perfil"
+    : "Adicionar informações sobre o perfil";
+  profileEditToggle.innerHTML = `
+    <span class="material-symbols-outlined">edit</span>
+    ${hasProfileData ? "Alterar informações do perfil" : "Adicionar informações sobre o perfil"}
+  `;
+  profilePhotoFileName.textContent = profileState.profile.photoUrl
+    ? "Foto selecionada"
+    : "Nenhuma foto escolhida";
 
   if (profileState.profile.photoUrl) {
-    profilePhotoButton.innerHTML = `<img src="${profileState.profile.photoUrl}" alt="Foto de perfil" onerror="this.parentElement.innerHTML='<span class=&quot;material-symbols-outlined&quot;>add_a_photo</span>Foto'" />`;
+    profilePhotoButton.innerHTML = `<img src="${profileState.profile.photoUrl}" alt="Foto de perfil" onerror="this.parentElement.innerHTML='<span class=&quot;material-symbols-outlined&quot;>person</span>'" />`;
   } else {
-    profilePhotoButton.innerHTML = '<span class="material-symbols-outlined">add_a_photo</span>Foto';
+    profilePhotoButton.innerHTML = '<span class="material-symbols-outlined">person</span>';
   }
 }
 
@@ -417,9 +446,9 @@ function showProfile(user) {
   renderProfileCard();
   renderSavedAddresses();
   setPayment(profileState.paymentMethod);
+  showProfileHome();
   accountAuth.hidden = true;
   profilePanel.hidden = false;
-  accountIntro.textContent = "Perfil aberto para cadastrar endereços e formas de pagamento.";
   profilePillLabel.textContent = "Perfil";
   setAuthStatus("");
   showToast("Perfil Domus carregado.");
@@ -445,6 +474,19 @@ async function loginAccount() {
 
   showProfile(data.user);
   showToast("Conta conectada.");
+}
+
+function showProfileHome() {
+  profileHomeView.hidden = false;
+  profileEditView.hidden = true;
+  accountIntro.textContent = "Perfil aberto para cadastrar endereços e formas de pagamento.";
+}
+
+function showProfileEdit() {
+  profileHomeView.hidden = true;
+  profileEditView.hidden = false;
+  accountIntro.textContent = "Atualize suas informações de perfil.";
+  profileEditView.scrollIntoView({ block: "start", behavior: "smooth" });
 }
 
 async function createAccount() {
@@ -493,33 +535,57 @@ async function createAccount() {
   showToast("Cadastro enviado.");
 }
 
-async function saveProfile() {
+function saveProfile(event) {
+  event?.preventDefault();
   const name = profileEditName.value.trim() || "Perfil Domus";
   profileState.profile = {
     name,
-    photoUrl: profilePhotoUrl.value.trim(),
+    photoUrl: profileState.profile.photoUrl,
     pronouns: profilePronouns.value.trim(),
     notes: profileNotes.value.trim(),
   };
   saveAccountState();
   renderProfileCard();
+  showProfileHome();
+  showToast("Perfil salvo.");
 
-  if (supabaseClient) {
+  syncProfileToSupabase();
+}
+
+async function syncProfileToSupabase() {
+  if (!supabaseClient) return;
+
+  try {
     const { error } = await supabaseClient.auth.updateUser({
       data: {
         full_name: profileState.profile.name,
-        avatar_url: profileState.profile.photoUrl,
         pronouns: profileState.profile.pronouns,
         notes: profileState.profile.notes,
       },
     });
-    if (error) {
-      showToast("Perfil salvo neste aparelho. Supabase não atualizou.");
-      return;
-    }
+    if (error) showToast("Perfil salvo neste aparelho. Supabase não atualizou.");
+  } catch {
+    showToast("Perfil salvo neste aparelho. Supabase não atualizou.");
+  }
+}
+
+function handleProfilePhoto(event) {
+  const [file] = event.target.files || [];
+  if (!file) return;
+
+  if (!file.type.startsWith("image/")) {
+    showToast("Escolha um arquivo de imagem.");
+    return;
   }
 
-  showToast("Perfil salvo.");
+  const reader = new FileReader();
+  reader.addEventListener("load", () => {
+    profileState.profile.photoUrl = reader.result;
+    profilePhotoFileName.textContent = file.name;
+    renderProfileCard();
+    showToast("Foto selecionada. Salve o perfil para guardar.");
+  });
+  reader.readAsDataURL(file);
 }
 
 async function loadSupabaseSession() {
@@ -529,43 +595,86 @@ async function loadSupabaseSession() {
   }
 
   const { data } = await supabaseClient.auth.getSession();
-  if (data.session?.user) showProfile(data.session.user);
+  if (data.session?.user) {
+    showProfile(data.session.user);
+  } else {
+    showSignedOutState();
+  }
 
   supabaseClient.auth.onAuthStateChange((_event, session) => {
     if (session?.user) showProfile(session.user);
+    else showSignedOutState();
   });
 }
 
-async function logout() {
-  if (supabaseClient) await supabaseClient.auth.signOut();
+function showSignedOutState(message = "") {
   emptyAccountState();
   renderSavedAddresses();
   setPayment("credit");
+  showProfileHome();
   profilePanel.hidden = true;
   accountAuth.hidden = false;
   accountIntro.textContent = "Entre ou crie sua conta para salvar pedidos, endereços e preferências.";
   profilePillLabel.textContent = "Entrar";
   setAuthStatus("");
-  showToast("Você saiu da conta Domus.");
+  if (message) showToast(message);
+}
+
+async function logout() {
+  if (supabaseClient) await supabaseClient.auth.signOut();
+  showSignedOutState("Você saiu da conta Domus.");
 }
 
 function renderSavedAddresses() {
   if (!profileState.addresses.length) {
     savedAddresses.innerHTML = "<p>Nenhum endereço cadastrado ainda.</p>";
+    renderCheckoutSavedAddresses();
     return;
   }
 
   savedAddresses.innerHTML = profileState.addresses
     .map(
       (address) => `
-        <button class="${profileState.selectedAddress === address.id ? "selected" : ""}" type="button" data-select-address="${address.id}">
-          <strong>${address.name}</strong>
-          <span>${address.street}</span>
-          <small>${address.district}</small>
-        </button>
+        <article class="saved-address-card ${profileState.selectedAddress === address.id ? "selected" : ""}">
+          <button class="saved-address-main" type="button" data-select-address="${address.id}">
+            <strong>${address.name}</strong>
+            <span>${address.street}</span>
+            <small>${address.district}</small>
+          </button>
+          <div class="saved-address-actions" aria-label="Ações do endereço ${address.name}">
+            <button type="button" data-edit-address="${address.id}">Editar</button>
+            <button type="button" data-delete-address="${address.id}">Excluir</button>
+          </div>
+        </article>
       `
     )
     .join("");
+  renderCheckoutSavedAddresses();
+}
+
+function renderCheckoutSavedAddresses() {
+  if (state.mode !== "delivery" || !profileState.addresses.length) {
+    checkoutSavedAddresses.hidden = true;
+    checkoutSavedAddresses.innerHTML = "";
+    return;
+  }
+
+  checkoutSavedAddresses.hidden = false;
+  checkoutSavedAddresses.innerHTML = `
+    <strong>Usar endereço salvo</strong>
+    <div class="checkout-address-options">
+      ${profileState.addresses
+        .map(
+          (address) => `
+            <button class="${profileState.selectedAddress === address.id ? "selected" : ""}" type="button" data-select-address="${address.id}">
+              <span>${address.name}</span>
+              <small>${address.street}</small>
+            </button>
+          `
+        )
+        .join("")}
+    </div>
+  `;
 }
 
 function saveAddress() {
@@ -578,22 +687,98 @@ function saveAddress() {
     return;
   }
 
-  const address = { id: `address-${Date.now()}`, name, street, district };
-  profileState.addresses.push(address);
+  const address = { id: editingAddressId || `address-${Date.now()}`, name, street, district };
+  const currentIndex = profileState.addresses.findIndex((item) => item.id === editingAddressId);
+
+  if (currentIndex >= 0) {
+    profileState.addresses[currentIndex] = address;
+  } else {
+    profileState.addresses.push(address);
+  }
+
   profileState.selectedAddress = address.id;
+  editingAddressId = null;
   saveAccountState();
   renderSavedAddresses();
   profileAddressName.value = "";
   profileAddressStreet.value = "";
   profileAddressDistrict.value = "";
-  showToast("Endereço salvo e selecionado.");
+  saveAddressButton.textContent = "Salvar endereço";
+  showToast(currentIndex >= 0 ? "Endereço atualizado e selecionado." : "Endereço salvo e selecionado.");
+}
+
+function saveCheckoutAddress() {
+  if (!profileState.userId) {
+    showSignedOutState();
+    drawer.classList.add("open");
+    drawer.setAttribute("aria-hidden", "false");
+    showToast("Entre na conta para salvar o endereço.");
+    return;
+  }
+
+  const street = streetInput.value.trim();
+  const district = districtInput.value.trim();
+
+  if (!street || !district) {
+    showToast("Preencha endereço e bairro antes de salvar.");
+    return;
+  }
+
+  const address = {
+    id: `address-${Date.now()}`,
+    name: "Endereço de entrega",
+    street,
+    district,
+  };
+
+  profileState.addresses.push(address);
+  profileState.selectedAddress = address.id;
+  saveAccountState();
+  renderSavedAddresses();
+  showToast("Endereço salvo na sua conta.");
 }
 
 function selectAddress(id) {
   profileState.selectedAddress = id;
+  const address = profileState.addresses.find((item) => item.id === id);
+  if (address) {
+    streetInput.value = address.street;
+    districtInput.value = address.district;
+    cityInput.value = "Fortaleza";
+    deliveryNote.classList.remove("error");
+    deliveryNote.textContent = "A entrega do Domus está disponível apenas dentro de Fortaleza.";
+  }
   saveAccountState();
   renderSavedAddresses();
   showToast("Endereço selecionado para os próximos pedidos.");
+}
+
+function editAddress(id) {
+  const address = profileState.addresses.find((item) => item.id === id);
+  if (!address) return;
+
+  editingAddressId = id;
+  profileAddressName.value = address.name;
+  profileAddressStreet.value = address.street;
+  profileAddressDistrict.value = address.district;
+  saveAddressButton.textContent = "Salvar alterações";
+  profileAddressName.focus();
+  showToast("Edite os campos e salve as alterações.");
+}
+
+function deleteAddress(id) {
+  profileState.addresses = profileState.addresses.filter((item) => item.id !== id);
+  if (profileState.selectedAddress === id) profileState.selectedAddress = profileState.addresses[0]?.id || null;
+  if (editingAddressId === id) {
+    editingAddressId = null;
+    profileAddressName.value = "";
+    profileAddressStreet.value = "";
+    profileAddressDistrict.value = "";
+    saveAddressButton.textContent = "Salvar endereço";
+  }
+  saveAccountState();
+  renderSavedAddresses();
+  showToast("Endereço excluído.");
 }
 
 function cardLabel(type) {
@@ -628,7 +813,6 @@ function renderSavedCards(type) {
 function cardForm(type) {
   const label = cardLabel(type);
   return `
-    ${renderSavedCards(type)}
     <form class="profile-form payment-form">
       <label>
         Número do cartão de ${label}
@@ -650,6 +834,7 @@ function cardForm(type) {
       </div>
       <button class="secondary-action" type="button" data-save-card="${type}">Salvar cartão de ${label}</button>
     </form>
+    ${renderSavedCards(type)}
   `;
 }
 
@@ -704,6 +889,7 @@ function setPayment(method) {
   document.querySelectorAll("[data-payment]").forEach((button) => {
     button.classList.toggle("active", button.dataset.payment === method);
   });
+  renderCheckoutPayment();
 
   if (method === "credit" || method === "debit") {
     paymentDetail.innerHTML = cardForm(method);
@@ -734,6 +920,30 @@ function setPayment(method) {
   `;
 }
 
+function renderCheckoutPayment() {
+  const method = profileState.paymentMethod;
+  const methodNames = {
+    credit: "Crédito",
+    debit: "Débito",
+    pix: "Pix",
+    paypal: "PayPal",
+  };
+
+  if (method === "credit" || method === "debit") {
+    const selectedCardId = profileState.selectedCard[method];
+    const selectedCard = profileState.cards[method].find((card) => card.id === selectedCardId);
+    checkoutPaymentSummary.textContent = selectedCard
+      ? `${methodNames[method]} final ${selectedCard.lastDigits}`
+      : `Nenhum cartão de ${cardLabel(method)} salvo ainda.`;
+    return;
+  }
+
+  checkoutPaymentSummary.textContent =
+    method === "pix"
+      ? "Pix selecionado. O QR Code será gerado na confirmação do pedido."
+      : "PayPal selecionado. Cadastre a conta PayPal no perfil.";
+}
+
 document.addEventListener("click", (event) => {
   const addButton = event.target.closest("[data-add]");
   const decButton = event.target.closest("[data-dec]");
@@ -744,10 +954,16 @@ document.addEventListener("click", (event) => {
   const loginButton = event.target.closest("[data-login-account]");
   const createAccountButton = event.target.closest("[data-create-account]");
   const saveProfileButton = event.target.closest("[data-save-profile]");
+  const openProfileEditButton = event.target.closest("[data-open-profile-edit]");
+  const backProfileHomeButton = event.target.closest("[data-back-profile-home]");
+  const openPaymentProfileButton = event.target.closest("[data-open-payment-profile]");
   const paymentButton = event.target.closest("[data-payment]");
   const logoutButton = event.target.closest("[data-logout]");
-  const saveAddressButton = event.target.closest("[data-save-address]");
+  const saveAddressClick = event.target.closest("[data-save-address]");
+  const saveCheckoutAddressButton = event.target.closest("[data-save-checkout-address]");
   const selectAddressButton = event.target.closest("[data-select-address]");
+  const editAddressButton = event.target.closest("[data-edit-address]");
+  const deleteAddressButton = event.target.closest("[data-delete-address]");
   const saveCardButton = event.target.closest("[data-save-card]");
   const selectCardButton = event.target.closest("[data-select-card]");
 
@@ -757,10 +973,21 @@ document.addEventListener("click", (event) => {
   if (navButton) navigateTo(navButton.dataset.nav);
   if (loginButton) loginAccount();
   if (createAccountButton) createAccount();
-  if (saveProfileButton) saveProfile();
+  if (saveProfileButton) saveProfile(event);
+  if (openProfileEditButton) showProfileEdit();
+  if (backProfileHomeButton) showProfileHome();
+  if (openPaymentProfileButton) {
+    drawer.classList.add("open");
+    drawer.setAttribute("aria-hidden", "false");
+    showProfileHome();
+    paymentDetail.scrollIntoView({ block: "center", behavior: "smooth" });
+  }
   if (paymentButton) setPayment(paymentButton.dataset.payment);
   if (logoutButton) logout();
-  if (saveAddressButton) saveAddress();
+  if (saveAddressClick) saveAddress();
+  if (saveCheckoutAddressButton) saveCheckoutAddress();
+  if (editAddressButton) editAddress(editAddressButton.dataset.editAddress);
+  if (deleteAddressButton) deleteAddress(deleteAddressButton.dataset.deleteAddress);
   if (selectAddressButton) selectAddress(selectAddressButton.dataset.selectAddress);
   if (saveCardButton) saveCard(saveCardButton.dataset.saveCard);
   if (selectCardButton) selectCard(selectCardButton.dataset.cardType, selectCardButton.dataset.selectCard);
@@ -783,6 +1010,12 @@ document.addEventListener("click", (event) => {
     document.querySelector("#signupForm").classList.toggle("active", authTab.dataset.authTab === "signup");
   }
 });
+
+profileEditForm.addEventListener("submit", (event) => {
+  saveProfile(event);
+});
+
+profilePhotoFile.addEventListener("change", handleProfilePhoto);
 
 paymentDetail.addEventListener("focusout", (event) => {
   if (!event.target.matches("[data-card-expiry]")) return;

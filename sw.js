@@ -1,4 +1,4 @@
-const CACHE_NAME = "domus-supermercado-v2";
+const CACHE_NAME = "domus-supermercado-v5";
 const APP_SHELL = [
   "./",
   "./index.html",
